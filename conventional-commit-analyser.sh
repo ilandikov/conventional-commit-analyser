@@ -2,28 +2,42 @@
 
 # Default values
 repository=""
-author_name="Ilyas Landikov"
+author_name=""
 words_to_filter=("Merge")
 
 # Parse command line options
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --repository)
-            repository="$2"
-            shift
-            ;;
+        repository="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        --author-name)
+        # Join all remaining arguments as the author name
+        shift # past argument
+        author_name="$*"
+        # Remove leading and trailing quotes from author_name if present
+        author_name=$(echo "$author_name" | sed -e 's/^"//' -e 's/"$//')
+        break
+        ;;
         *)
-            echo "Unknown parameter passed: $1"
-            exit 1
-            ;;
+        echo "Unknown parameter passed: $1"
+        exit 1
+        ;;
     esac
-    shift
 done
 
-# Check if repository is specified
+# Check if repository and author name are specified
 if [ -z "$repository" ]; then
     echo "Error: Please provide a repository path using --repository."
-    echo "Usage: $0 --repository <path>"
+    echo "Usage: $0 --repository <path> --author-name <author>"
+    exit 1
+fi
+
+if [ -z "$author_name" ]; then
+    echo "Error: Please provide an author name using --author-name."
+    echo "Usage: $0 --repository <path> --author-name <author>"
     exit 1
 fi
 
