@@ -1,26 +1,40 @@
 #!/bin/bash
 
-# Define words to filter out
+# Default values
+repository=""
+author_name="Ilyas Landikov"
 words_to_filter=("Merge")
 
-# Define author's name
-author_name="Ilyas Landikov"
+# Parse command line options
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --repository)
+            repository="$2"
+            shift
+            ;;
+        *)
+            echo "Unknown parameter passed: $1"
+            exit 1
+            ;;
+    esac
+    shift
+done
 
-# Check if exactly one argument is provided
-if [ "$#" -ne 1 ]; then
-    echo "Error: Please provide exactly one repository as an argument."
-    echo "Usage: $0 <repository>"
+# Check if repository is specified
+if [ -z "$repository" ]; then
+    echo "Error: Please provide a repository path using --repository."
+    echo "Usage: $0 --repository <path>"
     exit 1
 fi
 
 # Check if the specified repository exists
-if [ ! -d "$1" ]; then
-    echo "Error: The specified repository '$1' does not exist."
+if [ ! -d "$repository" ]; then
+    echo "Error: The specified repository '$repository' does not exist."
     exit 1
 fi
 
 # Change to the specified repository
-cd "$1" || exit
+cd "$repository" || exit
 
 # Store the output of git log in a variable, filtering by author's name
 commit_messages=$(git log --pretty="%s %an" | grep "$author_name")
@@ -87,12 +101,12 @@ total_commits_excluding_filtered=$((author_commit_count - filtered_commit_count)
 
 # Check if commit messages exist for the specified author
 if [ -z "$commit_messages" ]; then
-    echo "No commits found by $author_name."
+    echo "No commits found by $author_name in repository '$repository'."
     exit 0
 fi
 
 # Print the total number of commits by the specified author
-echo "Total number of commits by $author_name: $author_commit_count"
+echo "Total number of commits by $author_name in repository '$repository': $author_commit_count"
 echo "Filtered commits: $filtered_commit_count"
 echo "Analyzed commits: $total_commits_excluding_filtered"
 
