@@ -33,10 +33,12 @@ for test_name in "${tests[@]}"; do
     echo "$command_output" > "$received_output_file"
 
     # Compare the received output to the expected output
-    if diff -q "$received_output_file" "$expected_output_file" > /dev/null; then
+    echo
+    if diff_output=$(diff -u "$expected_output_file" "$received_output_file"); then
         echo "Test '$test_name' passed."
     else
-        echo "Test '$test_name' failed."
+        echo "Test '$test_name' failed:"
+        echo "$diff_output"
         failed_tests+=("$test_name")
     fi
 done
