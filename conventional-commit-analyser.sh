@@ -28,16 +28,10 @@ while [[ "$#" -gt 0 ]]; do
     esac
 done
 
-# Check if repository and author name are specified
+# Check if repository is specified
 if [ -z "$repository" ]; then
     echo "Error: Please provide a repository path using --repository."
-    echo "Usage: $0 --repository <path> --author-name <author>"
-    exit 1
-fi
-
-if [ -z "$author_name" ]; then
-    echo "Error: Please provide an author name using --author-name."
-    echo "Usage: $0 --repository <path> --author-name <author>"
+    echo "Usage: $0 --repository <path> [--author-name <author>]"
     exit 1
 fi
 
@@ -50,8 +44,12 @@ fi
 # Change to the specified repository
 cd "$repository" || exit
 
-# Store the output of git log in a variable, filtering by author's name
-commit_messages=$(git log --pretty="%s %an" | grep "$author_name")
+# Store the output of git log in a variable, filtering by author's name if provided
+if [ -n "$author_name" ]; then
+    commit_messages=$(git log --pretty="%s %an" | grep "$author_name")
+else
+    commit_messages=$(git log --pretty="%s %an")
+fi
 
 # Create an array to store unique prefixes
 prefixes=()
@@ -113,14 +111,21 @@ done <<< "$commit_messages"
 # Calculate the total number of commits excluding filtered ones
 total_commits_excluding_filtered=$((author_commit_count - filtered_commit_count))
 
-# Check if commit messages exist for the specified author
+# Check if commit messages exist
 if [ -z "$commit_messages" ]; then
-    echo "No commits found by $author_name in repository '$repository'."
+    echo "No commits found in repository '$repository'."
+    if [ -n "$author_name" ]; then
+        echo "No commits found by $author_name in repository '$repository'."
+    fi
     exit 0
 fi
 
-# Print the total number of commits by the specified author
-echo "Total number of commits by $author_name in repository '$repository': $author_commit_count"
+# Print the total number of commits
+if [ -n "$author_name" ]; then
+    echo "Total number of commits by $author_name in repository '$repository': $author_commit_count"
+else
+    echo "Total number of commits in repository '$repository': $author_commit_count"
+fi
 echo "Filtered commits: $filtered_commit_count"
 echo "Analyzed commits: $total_commits_excluding_filtered"
 
