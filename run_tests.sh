@@ -1,17 +1,15 @@
 #!/bin/bash
 
-# Check if exactly one argument is provided
-if [ "$#" -lt 1 ]; then
-    echo "Error: Please provide at least one test name."
-    echo "Usage: $0 <test_name1> <test_name2> ..."
-    exit 1
-fi
+# Define an array of test names
+tests=(
+  "no_args"
+)
 
 # Initialize an array to keep track of failed tests
 failed_tests=()
 
 # Loop over each provided test name
-for test_name in "$@"; do
+for test_name in "${tests[@]}"; do
     # Define the arguments file, received output file, and expected output file in the tests/ directory
     args_file="tests/${test_name}.args"
     received_output_file="tests/${test_name}.received"
