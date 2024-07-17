@@ -1,19 +1,17 @@
 #!/bin/bash
 
-# Define an array of test names
-tests=(
-  "no_args"
-  "ilandikov_commits"
-  "repository_not_existing"
-)
-
 # Initialize an array to keep track of failed tests
 failed_tests=()
 
-# Loop over each provided test name
-for test_name in "${tests[@]}"; do
-    # Define the arguments file, received output file, and expected output file in the tests/ directory
-    args_file="tests/${test_name}.args"
+# Find all .args files in the tests directory
+args_files=$(find tests -type f -name "*.args")
+
+# Loop over each found arguments file
+for args_file in $args_files; do
+    # Extract the test name from the args file name
+    test_name=$(basename "$args_file" .args)
+
+    # Define the received output file and expected output file based on the test name
     received_output_file="tests/${test_name}.received"
     expected_output_file="tests/${test_name}.expected"
 
