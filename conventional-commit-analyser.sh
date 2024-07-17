@@ -46,8 +46,8 @@ while IFS= read -r commit_info; do
     commit_message=$(echo "$commit_info" | cut -d " " -f 1)
     author=$(echo "$commit_info" | cut -d " " -f 2-)
 
-    # Increment the total count of commits
-    ((commit_count++))
+    # Increment the total count of commits by the specified author
+    ((author_commit_count++))
 
     # Check if the commit message starts with any word in words_to_filter
     skip_commit=false
@@ -63,9 +63,6 @@ while IFS= read -r commit_info; do
     if $skip_commit; then
         continue
     fi
-
-    # Increment the total count of commits by the specified author
-    ((author_commit_count++))
 
     # Extract the prefix from the commit message
     commit_message_prefix=$(echo "$commit_message" | cut -d ":" -f 1)
