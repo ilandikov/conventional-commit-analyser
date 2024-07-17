@@ -3,6 +3,7 @@
 # Define an array of test names
 tests=(
   "no_args"
+  "ilandikov_commits"
 )
 
 # Initialize an array to keep track of failed tests
