@@ -11,9 +11,9 @@ for args_file in $args_files; do
     # Extract the test name from the args file name
     test_name=$(basename "$args_file" .args)
 
-    # Define the received output file and expected output file based on the test name
+    # Define the received output file and approved output file based on the test name
     received_output_file="tests/${test_name}.received"
-    expected_output_file="tests/${test_name}.expected"
+    approved_output_file="tests/${test_name}.approved"
 
     # Check if the arguments file exists
     if [ ! -f "$args_file" ]; then
@@ -31,9 +31,9 @@ for args_file in $args_files; do
     # Save the output to the received output file in the tests/ directory
     echo "$command_output" > "$received_output_file"
 
-    # Compare the received output to the expected output
+    # Compare the received output to the approved output
     echo
-    if diff_output=$(diff -u "$expected_output_file" "$received_output_file"); then
+    if diff_output=$(diff -u "$approved_output_file" "$received_output_file"); then
         echo "Test '$test_name' passed."
     else
         echo "Test '$test_name' failed:"
