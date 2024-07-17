@@ -4,6 +4,7 @@
 tests=(
   "no_args"
   "ilandikov_commits"
+  "repository_not_existing"
 )
 
 # Initialize an array to keep track of failed tests
