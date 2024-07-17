@@ -1,0 +1,2 @@
+Error: Please provide exactly one repository as an argument.
+Usage: ./conventional-commit-analyser.sh <repository>
