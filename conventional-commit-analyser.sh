@@ -27,6 +27,7 @@ while [[ "$#" -gt 0 ]]; do
         ;;
         *)
         echo "Unknown parameter passed: $1"
+        echo "Usage: $0 --repository <path> [--author-name <author>] [--show-skipped-commits]"
         exit 1
         ;;
     esac

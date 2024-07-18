@@ -1,0 +1,2 @@
+Unknown parameter passed: --not-an-option-in-the-script
+Usage: ./conventional-commit-analyser.sh --repository <path> [--author-name <author>] [--show-skipped-commits]
