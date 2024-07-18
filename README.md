@@ -10,25 +10,25 @@ This is why this script was created.
 
 Sample output:
 
-```
-Total number of commits by Ilyas Landikov: 662
-Filtered commits: 1 filtered commits
-Analyzed commits: 661
-59%: 'refactor'
-25%: 'test'
-5%: 'feat'
-4%: 'jsdoc'
-2%: 'fix'
-2%: 'docs'
-1%: 'style'
-1%: 'doc'
-<1%: 'vault'
-<1%: 'tests'
-<1%: 'fix!!'
-<1%: 'comment'
-<1%: 'chore'
-<1%: 'Revert'
-<1%: 'Rename'
+```terminal
+./conventional-commit-analyser.sh --repository ../obsidian-tasks --author-name "Ilyas Landikov"
+
+Total number of commits by Ilyas Landikov in repository '../obsidian-tasks': 1063
+Skipped non-conventional commits: 9
+Conventional commits: 1054
+61%: refactor
+24%: test
+5%: feat
+3%: jsdoc
+2%: fix
+1%: vault
+1%: style
+1%: docs
+1%: chore
+<1%: tests
+<1%: fix!!
+<1%: doc
+<1%: comment
 ```
 
 Here we can guess that I'm working a lot of refactorings and rather avoid documentation =)
@@ -39,11 +39,17 @@ Try using this to compare your current self to your previous self. For example, 
 
 Sample usage:
 
-```
-./convetional-commit-analyser.sh /path/to/your/repo
+```terminal
+./conventional-commit-analyser.sh --repository <path> [--author-name <author>] [--show-skipped-commits]
 ```
 
-> The script is compatible with bash v3 only.
+### `--author-name <author>`
+
+Add this if you wish to filter commits by author's name. For example `--author-name "Foo Bar"`.
+
+### `--show-skipped-commits`
+
+The script will analyse only conventional commits - commits with message starting with several non-space characters and a column. If you see lots of skipped commits, add this option to see what has been skipped.
 
 ## Important limitations
 
