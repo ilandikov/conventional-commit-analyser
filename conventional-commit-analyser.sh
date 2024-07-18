@@ -181,10 +181,8 @@ while IFS= read -r commit_info; do
     done
 done <<< "$commit_messages"
 
-# Calculate the total number of commits excluding skipped ones
-conventional_commit_count=$((author_commit_count - skipped_commit_count))
-
 # Print the total number of commits
+conventional_commit_count=$((author_commit_count - skipped_commit_count))
 if [ -n "$author_name" ]; then
     echo "Total number of commits by $author_name in repository '$repository': $author_commit_count"
 else
