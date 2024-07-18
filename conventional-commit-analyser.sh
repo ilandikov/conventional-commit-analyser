@@ -227,7 +227,7 @@ formatted_lines=()
 for i in "${!prefixes[@]}"; do
     prefix_percentage=$(calculate_percentage "${prefix_counts[$i]}" "$conventional_commit_count")
     # Format each line and store in the array
-    line=$(printf "| %-*s | %-*s " "$column_width" "${prefixes[$i]}" "$column_width" "$prefix_percentage")
+    line=$(printf "| %-*s | %-*s |" "$column_width" "${prefixes[$i]}" "$column_width" "$prefix_percentage")
     if [ "$by_option" != "none" ]; then
         for period in "${periods_sorted[@]}"; do
             index="${prefixes[$i]},${period}"
@@ -237,10 +237,9 @@ for i in "${!prefixes[@]}"; do
             fi
             period_total_count=${period_commit_counts["$period"]}
             period_percentage=$(calculate_percentage "$period_count" "$period_total_count")
-            line+=$(printf "| %-*s " "$column_width" "$period_percentage")
+            line+=$(printf " %-*s |" "$column_width" "$period_percentage")
         done
     fi
-    line+="|"
     formatted_lines+=("$line")
 done
 
