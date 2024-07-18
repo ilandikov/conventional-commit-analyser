@@ -66,7 +66,7 @@ cd "$repository" || exit
 
 # Store the output of git log in a variable, filtering by author's name if provided
 if [ -n "$author_name" ]; then
-    commit_messages=$(git log --pretty="%s :: %an :: %ad :: %h" --date=short | grep "$author_name")
+    commit_messages=$(git log --pretty="%s :: %an :: %ad :: %h" --date=short --author="$author_name")
 else
     commit_messages=$(git log --pretty="%s :: %an :: %ad :: %h" --date=short)
 fi
