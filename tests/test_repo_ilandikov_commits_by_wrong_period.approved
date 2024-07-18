@@ -1,0 +1,2 @@
+Error: Unsupported value for --by. Only 'month' is supported.
+Usage: ./conventional-commit-analyser.sh --repository <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]
