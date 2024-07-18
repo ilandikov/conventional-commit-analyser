@@ -215,7 +215,7 @@ if [ "$by_option" != "none" ]; then
     done
 fi
 
-printf "\n%s\n" "$header_line"
+print_header_line $column_width $by_option ${periods_sorted[@]}
 
 # Print the table separator
 print_separator_row $(( ${#periods_sorted[@]} + 2 )) $column_width
