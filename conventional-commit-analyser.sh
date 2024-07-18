@@ -250,5 +250,4 @@ done
 sorted_lines=$(printf "%s\n" "${formatted_lines[@]}" | sort -k4nr -k2)
 
 # Print the sorted lines
-printf "%s\n" "$sorted_lines"
-echo
+printf "%s\n\n" "$sorted_lines"
