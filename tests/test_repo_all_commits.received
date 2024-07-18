@@ -1,8 +1,7 @@
 Total number of commits in repository './tests/test_repo': 8
-Filtered commits: 1
-Analyzed commits: 7
-43%: feat
-14%: refactor
-14%: fix
-14%: chore
-14%: Initial
+Filtered commits: 2
+Analyzed commits: 6
+50%: feat
+17%: refactor
+17%: fix
+17%: chore

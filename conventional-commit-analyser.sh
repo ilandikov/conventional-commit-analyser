@@ -3,7 +3,7 @@
 # Default values
 repository=""
 author_name=""
-words_to_filter=("Merge")
+words_to_filter=("Merge" "Initial")
 
 # Parse command line options
 while [[ "$#" -gt 0 ]]; do
