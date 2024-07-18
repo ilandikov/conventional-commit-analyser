@@ -206,10 +206,8 @@ column_width=8
 # Sort periods in chronological order
 periods_sorted=($(printf "%s\n" "${periods[@]}" | sort))
 
-# Print the table headers
 print_header_line $column_width $by_option ${periods_sorted[@]}
 
-# Print the table separator
 print_separator_row $(( ${#periods_sorted[@]} + 2 )) $column_width
 
 table_rows=()
