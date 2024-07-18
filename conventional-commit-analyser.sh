@@ -1,5 +1,7 @@
 #!/opt/homebrew/bin/bash
 
+source ./calculate_percentage.sh
+
 # Default values
 repository=""
 author_name=""
@@ -92,21 +94,6 @@ skipped_commits_info=()
 declare -A periodic_prefix_counts
 declare -A period_commit_counts
 periods=()
-
-# Calculate the percentage and handle the special cases
-calculate_percentage() {
-    local count=$1
-    local total=$2
-    local percentage=$(awk "BEGIN {printf \"%.0f\", ($count / $total) * 100}")
-
-    if [ "$count" -eq 0 ]; then
-        echo "0%"
-    elif [ "$percentage" -lt 1 ]; then
-        echo "<1%"
-    else
-        echo "${percentage}%"
-    fi
-}
 
 # Iterate over each line in the log output
 while IFS= read -r commit_info; do
