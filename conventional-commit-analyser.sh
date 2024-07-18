@@ -29,13 +29,7 @@ while [[ "$#" -gt 0 ]]; do
         shift # past argument
         ;;
         --by)
-        if [ "$2" == "year" ] || [ "$2" == "month" ] || [ "$2" == "week" ]; then
         by_option="$2"
-        else
-            echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
-            echo "Usage: $0 --repository <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
-            exit 1
-        fi
         shift # past argument
         shift # past value
         ;;
@@ -46,6 +40,13 @@ while [[ "$#" -gt 0 ]]; do
         ;;
     esac
 done
+
+# Restricting by_option to 'week', 'month', and 'year' for now
+if [ "$by_option" != "none" ] && [ "$by_option" != "week" ] && [ "$by_option" != "month" ] && [ "$by_option" != "year" ]; then
+    echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
+    echo "Usage: $0 --repository <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+    exit 1
+fi
 
 # Check if repository is specified
 if [ -z "$repository" ]; then
