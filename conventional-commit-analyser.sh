@@ -10,32 +10,32 @@ by_option="none"
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --repository)
-            repository="$2"
-            shift # past argument
-            shift # past value
-            ;;
+        repository="$2"
+        shift # past argument
+        shift # past value
+        ;;
         --author-name)
-            shift # past argument
-            while [[ "$#" -gt 0 && $1 != "--"* ]]; do
-                author_name="$author_name $1"
-                shift
-            done
-            author_name=$(echo "$author_name" | sed -e 's/^ *//' -e 's/ *$//' -e 's/^"//' -e 's/"$//')
-            ;;
+        shift # past argument
+        while [[ "$#" -gt 0 && $1 != "--"* ]]; do
+            author_name="$author_name $1"
+            shift
+        done
+        author_name=$(echo "$author_name" | sed -e 's/^ *//' -e 's/ *$//' -e 's/^"//' -e 's/"$//')
+        ;;
         --show-skipped-commits)
-            show_skipped_commits=true
-            shift # past argument
-            ;;
+        show_skipped_commits=true
+        shift # past argument
+        ;;
         --by)
-            by_option="$2"
-            shift # past argument
-            shift # past value
-            ;;
+        by_option="$2"
+        shift # past argument
+        shift # past value
+        ;;
         *)
-            echo "Unknown parameter passed: $1"
-            echo "Usage: $0 --repository <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
-            exit 1
-            ;;
+        echo "Unknown parameter passed: $1"
+        echo "Usage: $0 --repository <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+        exit 1
+        ;;
     esac
 done
 
@@ -92,6 +92,21 @@ skipped_commits_info=()
 declare -A periodic_prefix_counts
 declare -A period_commit_counts
 periods=()
+
+# Calculate the percentage and handle the special cases
+calculate_percentage() {
+    local count=$1
+    local total=$2
+    local percentage=$(awk "BEGIN {printf \"%.0f\", ($count / $total) * 100}")
+
+    if [ "$count" -eq 0 ]; then
+        echo "0%"
+    elif [ "$percentage" -lt 1 ]; then
+        echo "<1%"
+    else
+        echo "${percentage}%"
+    fi
+}
 
 # Iterate over each line in the log output
 while IFS= read -r commit_info; do
@@ -206,12 +221,9 @@ formatted_lines=()
 
 # Iterate over the prefixes and calculate the percentage of commits
 for i in "${!prefixes[@]}"; do
-    prefix_percentage=$(awk "BEGIN {printf \"%.0f\", (${prefix_counts[$i]} / $conventional_commit_count) * 100}")
-    if [ "$prefix_percentage" -lt 1 ]; then
-        prefix_percentage="<1"
-    fi
+    prefix_percentage=$(calculate_percentage "${prefix_counts[$i]}" "$conventional_commit_count")
     # Format each line and store in the array
-    line=$(printf "| %-*s | %-*s " "$column_width" "${prefixes[$i]}" "$column_width" "$prefix_percentage%")
+    line=$(printf "| %-*s | %-*s " "$column_width" "${prefixes[$i]}" "$column_width" "$prefix_percentage")
     if [ "$by_option" != "none" ]; then
         for period in "${periods[@]}"; do
             index="${prefixes[$i]},${period}"
@@ -220,11 +232,8 @@ for i in "${!prefixes[@]}"; do
                 period_count=0
             fi
             period_total_count=${period_commit_counts["$period"]}
-            period_percentage=$(awk "BEGIN {printf \"%.0f\", ($period_count / $period_total_count) * 100}")
-            if [ "$period_percentage" -lt 1 ]; then
-                period_percentage="<1"
-            fi
-            line+=$(printf "| %-*s " "$column_width" "$period_percentage%")
+            period_percentage=$(calculate_percentage "$period_count" "$period_total_count")
+            line+=$(printf "| %-*s " "$column_width" "$period_percentage")
         done
     fi
     line+="|"
