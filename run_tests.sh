@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./tests/helpers/echo_color.sh
+
 # Initialize an array to keep track of failed tests
 failed_tests=()
 
@@ -17,7 +19,7 @@ for args_file in $args_files; do
 
     # Check if the arguments file exists
     if [ ! -f "$args_file" ]; then
-        echo "Error: Arguments file '$args_file' does not exist."
+        echo_error "Error: Arguments file '$args_file' does not exist."
         failed_tests+=("$test_name")
         continue
     fi
@@ -34,9 +36,10 @@ for args_file in $args_files; do
     # Compare the received output to the approved output
     echo
     if diff_output=$(diff -u "$approved_output_file" "$received_output_file"); then
-        echo "Test '$test_name' passed."
+        echo_pass "Test '$test_name' passed."
     else
-        echo "Test '$test_name' failed:"
+        echo_error "Test '$test_name' failed:"
+        echo
         echo "$diff_output"
         failed_tests+=("$test_name")
     fi
@@ -45,10 +48,11 @@ done
 # Print the results of all tests
 echo
 if [ "${#failed_tests[@]}" -ne 0 ]; then
-    echo "The following tests failed:"
+    echo_error "The following tests failed:"
     for test in "${failed_tests[@]}"; do
-        echo "- $test"
+        echo_error "- $test"
     done
 else
-    echo "All tests passed."
+    echo_pass "All tests passed."
 fi
+echo
