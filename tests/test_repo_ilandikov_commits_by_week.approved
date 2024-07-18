@@ -1,0 +1,8 @@
+Total number of commits by Ilyas Landikov in repository './tests/test_repo': 7
+Skipped non-conventional commits: 3
+Conventional commits: 4
+
+| Type     | Total    | 2024-W28 | 2024-W07 |
+| -------- | -------- | -------- | -------- |
+| feat     | 75%      | 100%     | 0%       |
+| chore    | 25%      | 0%       | 100%     |

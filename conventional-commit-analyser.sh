@@ -29,10 +29,10 @@ while [[ "$#" -gt 0 ]]; do
         shift # past argument
         ;;
         --by)
-        if [ "$2" == "month" ]; then
+        if [ "$2" == "month" ] || [ "$2" == "week" ]; then
             by_option="$2"
         else
-            echo "Error: Unsupported value for --by. Only 'month' is supported."
+            echo "Error: Unsupported value for --by. Only 'month' and 'week' are supported."
             echo "Usage: $0 --repository <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
             exit 1
         fi
@@ -110,6 +110,8 @@ while IFS= read -r commit_info; do
     # Extract period based on by_option
     if [ "$by_option" == "month" ]; then
         period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y-%m")
+    elif [ "$by_option" == "week" ]; then
+        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y-W%U")
     else
         period="none"
     fi
