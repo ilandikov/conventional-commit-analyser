@@ -2,6 +2,13 @@
 
 source ./tests/helpers/echo_color.sh
 
+# Check for colordiff and set the diff command accordingly
+if command -v colordiff &> /dev/null; then
+    diff_cmd="colordiff"
+else
+    diff_cmd="diff"
+fi
+
 # Initialize an array to keep track of failed tests
 failed_tests=()
 
@@ -35,7 +42,7 @@ for args_file in $args_files; do
 
     # Compare the received output to the approved output
     echo
-    if diff_output=$(diff -u "$approved_output_file" "$received_output_file"); then
+    if diff_output=$($diff_cmd -u "$approved_output_file" "$received_output_file"); then
         echo_pass "Test '$test_name' passed."
     else
         echo_error "Test '$test_name' failed:"
