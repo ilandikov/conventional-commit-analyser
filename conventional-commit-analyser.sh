@@ -220,7 +220,7 @@ printf "\n%s\n" "$header_line"
 # Print the table separator
 print_separator_row $(( ${#periods_sorted[@]} + 2 )) $column_width
 
-formatted_lines=()
+table_rows=()
 for i in "${!prefixes[@]}"; do
 
     # Iterate over the prefixes and calculate the percentage of commits
@@ -243,11 +243,11 @@ for i in "${!prefixes[@]}"; do
         done
     fi
 
-    formatted_lines+=("$line")
+    table_rows+=("$line")
 done
 
 # Sort the formatted lines by the percentage field (second column)
-sorted_lines=$(printf "%s\n" "${formatted_lines[@]}" | sort -k4nr -k2)
+sorted_table_rows=$(printf "%s\n" "${table_rows[@]}" | sort -k4nr -k2)
 
 # Print the sorted lines
-printf "%s\n\n" "$sorted_lines"
+printf "%s\n\n" "$sorted_table_rows"
