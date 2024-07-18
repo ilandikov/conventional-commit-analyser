@@ -207,15 +207,15 @@ column_width=8
 periods_sorted=($(printf "%s\n" "${periods[@]}" | sort))
 
 # Print the table headers
-echo
-printf "| %-*s | %-*s " "$column_width" "Type" "$column_width" "Total"
+header_line=$(printf "| %-*s | %-*s |" "$column_width" "Type" "$column_width" "Total")
 
 if [ "$by_option" != "none" ]; then
     for period in "${periods_sorted[@]}"; do
-        printf "| %-*s " "$column_width" "$period"
+        header_line+=$(printf " %-*s |" "$column_width" "$period")
     done
 fi
-echo "|"
+
+printf "\n%s\n" "$header_line"
 
 # Print the table separator
 print_separator_row $(( ${#periods_sorted[@]} + 2 )) $column_width
