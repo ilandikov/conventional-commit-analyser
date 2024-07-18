@@ -188,16 +188,16 @@ if [ -n "$author_name" ]; then
 else
     echo "Total number of commits in repository '$repository': $author_commit_count"
 fi
+echo "Conventional commits: $conventional_commit_count"
 
 # Print skipped commits info if --show-skipped-commits is set
 if $show_skipped_commits; then
+    echo
     echo "Skipped non-conventional commits: $skipped_commit_count"
     for commit_info in "${skipped_commits_info[@]}"; do
         echo "$commit_info"
     done
 fi
-
-echo "Conventional commits: $conventional_commit_count"
 
 column_width=8
 
