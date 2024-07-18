@@ -150,14 +150,14 @@ while IFS= read -r commit_info; do
     else
         period="none"
     fi
-    
-    # Increment the count of commits for the period
-    ((period_commit_counts["$period"]++))
 
     # Increment the periodic count for the prefix
     if [ "$by_option" == "none" ]; then
         continue
     fi
+
+    # Increment the count of commits for the period
+    ((period_commit_counts["$period"]++))
 
     if ! [[ " ${periods[@]} " =~ " ${period} " ]]; then
         periods+=("$period")
