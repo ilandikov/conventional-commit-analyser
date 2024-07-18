@@ -226,7 +226,7 @@ for i in "${!prefixes[@]}"; do
     # Format each line and store in the array
     line=$(printf "| %-*s | %-*s " "$column_width" "${prefixes[$i]}" "$column_width" "$prefix_percentage")
     if [ "$by_option" != "none" ]; then
-        for period in "${periods[@]}"; do
+        for period in "${periods_sorted[@]}"; do
             index="${prefixes[$i]},${period}"
             period_count=${periodic_prefix_counts["$index"]}
             if [ -z "$period_count" ]; then
