@@ -1,6 +1,7 @@
 #!/opt/homebrew/bin/bash
 
 source ./calculate_percentage.sh
+source ./mdtable_utils.sh
 
 # Default values
 repository=""
@@ -215,17 +216,6 @@ if [ "$by_option" != "none" ]; then
     done
 fi
 echo "|"
-
-print_separator_row() {
-    local column_number=$1
-    local column_width=$2
-    local separator=$(printf "%-${column_width}s" | tr ' ' '-')
-    printf "| %-${column_width}s |" "$separator"
-    for ((i = 1; i < column_number; i++)); do
-        printf " %-${column_width}s |" "$separator"
-    done
-    printf "\n"
-}
 
 # Print the table separator
 print_separator_row $(( ${#periods_sorted[@]} + 2 )) $column_width
