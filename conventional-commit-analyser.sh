@@ -155,21 +155,23 @@ while IFS= read -r commit_info; do
     ((period_commit_counts["$period"]++))
 
     # Increment the periodic count for the prefix
-    if [ "$by_option" != "none" ]; then
-        if ! [[ " ${periods[@]} " =~ " ${period} " ]]; then
-            periods+=("$period")
-        fi
-        for i in "${!prefixes[@]}"; do
-            if [ "${prefixes[$i]}" == "$commit_message_prefix" ]; then
-                index="${prefixes[$i]},${period}"
-                if [ -z "${periodic_prefix_counts[$index]}" ]; then
-                    periodic_prefix_counts[$index]=0
-                fi
-                ((periodic_prefix_counts["$index"]++))
-                break
-            fi
-        done
+    if [ "$by_option" == "none" ]; then
+        continue
     fi
+
+    if ! [[ " ${periods[@]} " =~ " ${period} " ]]; then
+        periods+=("$period")
+    fi
+    for i in "${!prefixes[@]}"; do
+        if [ "${prefixes[$i]}" == "$commit_message_prefix" ]; then
+            index="${prefixes[$i]},${period}"
+            if [ -z "${periodic_prefix_counts[$index]}" ]; then
+                periodic_prefix_counts[$index]=0
+            fi
+            ((periodic_prefix_counts["$index"]++))
+            break
+        fi
+    done
 done <<< "$commit_messages"
 
 # Calculate the total number of commits excluding skipped ones
