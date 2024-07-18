@@ -9,8 +9,18 @@ else
     diff_cmd="diff"
 fi
 
-# Initialize an array to keep track of failed tests
+# Initialize an array to keep track of tests
+passed_tests=()
 failed_tests=()
+approved_tests=()
+
+# Check if the --approve option is provided
+approve=false
+if [[ "$1" == "--approve" ]]; then
+    approve=true
+    shift
+fi
+
 
 # Find all .args files in the tests directory
 args_files=$(find tests -type f -name "*.args")
@@ -44,22 +54,37 @@ for args_file in $args_files; do
     echo
     if diff_output=$($diff_cmd -u "$approved_output_file" "$received_output_file"); then
         echo_pass "Test '$test_name' passed."
+        passed_tests+=("$test_name")
     else
-        echo_error "Test '$test_name' failed:"
+        if [ "$approve" = true ]; then
+            rm "$approved_output_file"
+            cp "$received_output_file" "$approved_output_file"
+            echo_warning "Test '$test_name' approved."
+            approved_tests+=("$test_name")
+        else
+            echo_error "Test '$test_name' failed:"
+            failed_tests+=("$test_name")
+        fi
+
         echo
         echo "$diff_output"
-        failed_tests+=("$test_name")
     fi
 done
 
 # Print the results of all tests
 echo
+echo_pass "Passed: ${#passed_tests[@]}"
+
+echo_error "Failed: ${#failed_tests[@]}"
 if [ "${#failed_tests[@]}" -ne 0 ]; then
-    echo_error "The following tests failed:"
     for test in "${failed_tests[@]}"; do
         echo_error "- $test"
     done
-else
-    echo_pass "All tests passed."
 fi
-echo
+
+if [ "$approve" = true ]; then
+    echo_warning "Approved: ${#approved_tests[@]}"
+    for test in "${approved_tests[@]}"; do
+        echo_warning "- $test"
+    done
+fi
