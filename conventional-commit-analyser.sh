@@ -110,17 +110,6 @@ while IFS= read -r commit_info; do
     # Extract commit message, author name, date, and short hash
     commit_message=$(echo "$commit_info" | awk -F ' :: ' '{print $1}')
     commit_date=$(echo "$commit_info" | awk -F ' :: ' '{print $3}')
-    
-    # Extract period based on by_option
-    if [ "$by_option" == "year" ]; then
-        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y")
-    elif [ "$by_option" == "month" ]; then
-        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y-%m")
-    elif [ "$by_option" == "week" ]; then
-        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y-W%U")
-    else
-        period="none"
-    fi
 
     # Check if the commit message contains a word followed by a ':'
     if ! [[ "$commit_message" =~ ^[^[:space:]]+: ]]; then
@@ -133,9 +122,6 @@ while IFS= read -r commit_info; do
         fi
         continue
     fi
-
-    # Increment the count of commits for the period
-    ((period_commit_counts["$period"]++))
 
     # Extract the prefix from the commit message
     commit_message_prefix=$(echo "$commit_message" | cut -d ":" -f 1)
@@ -153,6 +139,20 @@ while IFS= read -r commit_info; do
             break
         fi
     done
+
+    # Extract period based on by_option
+    if [ "$by_option" == "year" ]; then
+        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y")
+    elif [ "$by_option" == "month" ]; then
+        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y-%m")
+    elif [ "$by_option" == "week" ]; then
+        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y-W%U")
+    else
+        period="none"
+    fi
+    
+    # Increment the count of commits for the period
+    ((period_commit_counts["$period"]++))
 
     # Increment the periodic count for the prefix
     if [ "$by_option" != "none" ]; then
