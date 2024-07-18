@@ -191,12 +191,15 @@ echo "Conventional commits: $conventional_commit_count"
 
 column_width=8
 
+# Sort periods in chronological order
+periods_sorted=($(printf "%s\n" "${periods[@]}" | sort))
+
 # Print the table headers
 echo
 printf "| %-*s | %-*s " "$column_width" "Type" "$column_width" "Total"
 
 if [ "$by_option" != "none" ]; then
-    for period in "${periods[@]}"; do
+    for period in "${periods_sorted[@]}"; do
         printf "| %-*s " "$column_width" "$period"
     done
 fi
@@ -205,7 +208,7 @@ echo "|"
 # Print the table separator
 printf "| %-*s | %-*s" "$column_width" "$(printf "%-${column_width}s" | tr ' ' '-')" "$column_width" "$(printf "%-${column_width}s" | tr ' ' '-')"
 if [ "$by_option" != "none" ]; then
-    for period in "${periods[@]}"; do
+    for period in "${periods_sorted[@]}"; do
         printf " | %-*s" "$column_width" "$(printf "%-${column_width}s" | tr ' ' '-')"
     done
 fi
