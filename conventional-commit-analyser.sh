@@ -51,6 +51,17 @@ else
     commit_messages=$(git log --pretty="%s %an")
 fi
 
+# Check if commit messages exist
+if [ -z "$commit_messages" ]; then
+    if [ -n "$author_name" ]; then
+        echo "No commits made by '$author_name' found in repository '$repository'."
+        exit 0
+    fi
+
+    echo "No commits found in repository '$repository'."
+    exit 0
+fi
+
 # Create an array to store unique prefixes
 prefixes=()
 
@@ -110,15 +121,6 @@ done <<< "$commit_messages"
 
 # Calculate the total number of commits excluding filtered ones
 total_commits_excluding_filtered=$((author_commit_count - filtered_commit_count))
-
-# Check if commit messages exist
-if [ -z "$commit_messages" ]; then
-    echo "No commits found in repository '$repository'."
-    if [ -n "$author_name" ]; then
-        echo "No commits found by $author_name in repository '$repository'."
-    fi
-    exit 0
-fi
 
 # Print the total number of commits
 if [ -n "$author_name" ]; then
