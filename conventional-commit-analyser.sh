@@ -48,6 +48,22 @@ if [ "$by_option" != "none" ] && [ "$by_option" != "week" ] && [ "$by_option" !=
     exit 1
 fi
 
+# Determine period format based on by_option
+case $by_option in
+    year)
+    date_format="%Y"
+    ;;
+    month)
+    date_format="%Y-%m"
+    ;;
+    week)
+    date_format="%Y-W%U"
+    ;;
+    *)
+    date_format="none"
+    ;;
+esac
+
 # Check if repository is specified
 if [ -z "$repository" ]; then
     echo "Error: Please provide a repository path using --repository."
@@ -141,12 +157,8 @@ while IFS= read -r commit_info; do
     done
 
     # Extract period based on by_option
-    if [ "$by_option" == "year" ]; then
-        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y")
-    elif [ "$by_option" == "month" ]; then
-        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y-%m")
-    elif [ "$by_option" == "week" ]; then
-        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"%Y-W%U")
+    if [ "$by_option" != "none" ]; then
+        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"$date_format")
     else
         period="none"
     fi
