@@ -104,6 +104,9 @@ periods=()
 
 # Iterate over each line in the log output
 while IFS= read -r commit_info; do
+    # Increment the total count of commits by the specified author
+    ((author_commit_count++))
+
     # Extract commit message, author name, date, and short hash
     commit_message=$(echo "$commit_info" | awk -F ' :: ' '{print $1}')
     commit_date=$(echo "$commit_info" | awk -F ' :: ' '{print $3}')
@@ -118,9 +121,6 @@ while IFS= read -r commit_info; do
     else
         period="none"
     fi
-
-    # Increment the total count of commits by the specified author
-    ((author_commit_count++))
 
     # Check if the commit message contains a word followed by a ':'
     if ! [[ "$commit_message" =~ ^[^[:space:]]+: ]]; then
