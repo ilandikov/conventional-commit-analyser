@@ -141,11 +141,29 @@ fi
 
 echo "Conventional commits: $conventional_commit_count"
 
+column_width=8
+
+# Print the table headers
+echo
+printf "| %-*s | %-*s |\n" "$column_width" "Type" "$column_width" "Total"
+printf "| %-*s | %-*s |\n" "$column_width" "$(printf "%-${column_width}s" | tr ' ' '-')" "$column_width" "$(printf "%-${column_width}s" | tr ' ' '-')"
+
+# Create an array to store formatted lines
+formatted_lines=()
+
 # Iterate over the prefixes and calculate the percentage of commits
 for i in "${!prefixes[@]}"; do
     prefix_percentage=$(awk "BEGIN {printf \"%.0f\", (${prefix_counts[$i]} / $conventional_commit_count) * 100}")
     if [ "$prefix_percentage" -lt 1 ]; then
         prefix_percentage="<1"
     fi
-    echo "$prefix_percentage%: ${prefixes[$i]}"
-done | sort -nr
+    # Format each line and store in the array
+    formatted_lines+=("$(printf "| %-*s | %-*s |" "$column_width" "${prefixes[$i]}" "$column_width" "$prefix_percentage%")")
+done
+
+# Sort the formatted lines by the percentage field (third column)
+sorted_lines=$(printf "%s\n" "${formatted_lines[@]}" | sort -k4nr -k2)
+
+# Print the sorted lines
+printf "%s\n" "$sorted_lines"
+echo

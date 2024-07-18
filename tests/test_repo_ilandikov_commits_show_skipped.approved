@@ -4,5 +4,8 @@ Skipped non-conventional commits: 3
 ca4ae31 on 2024-07-17 by Ilyas Landikov 'Initial commit'
 ab93474 on 2024-07-17 by Ilyas Landikov 'Merge branch 'refs/heads/master' into my-new-feature'
 Conventional commits: 4
-75%: feat
-25%: chore
+
+| Type     | Total    |
+| -------- | -------- |
+| feat     | 75%      |
+| chore    | 25%      |
