@@ -1,5 +1,5 @@
-Total number of commits in repository './tests/test_repo': 8
-Skipped non-conventional commits: 2
+Total number of commits in repository './tests/test_repo': 9
+Skipped non-conventional commits: 3
 Conventional commits: 6
 50%: feat
 17%: refactor

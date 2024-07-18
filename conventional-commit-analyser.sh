@@ -95,8 +95,8 @@ while IFS= read -r commit_info; do
     # Increment the total count of commits by the specified author
     ((author_commit_count++))
 
-    # Check if the commit message contains a ':'
-    if [[ "$commit_message" != *:* ]]; then
+    # Check if the commit message contains a word followed by a ':'
+    if ! [[ "$commit_message" =~ ^[^[:space:]]+: ]]; then
         ((skipped_commit_count++))
         if $show_skipped_commits; then
             author=$(echo "$commit_info" | awk -F ' :: ' '{print $2}')
