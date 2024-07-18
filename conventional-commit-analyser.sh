@@ -73,9 +73,6 @@ prefixes=()
 # Initialize total number of commits by the specified author
 author_commit_count=0
 
-# Initialize total number of commits
-commit_count=0
-
 # Initialize total number of skipped commits
 skipped_commit_count=0
 
@@ -89,8 +86,6 @@ skipped_commits_info=()
 while IFS= read -r commit_info; do
     # Extract commit message, author name, date, and short hash
     commit_message=$(echo "$commit_info" | awk -F ' :: ' '{print $1}')
-    
-    
     
     # Increment the total count of commits by the specified author
     ((author_commit_count++))
