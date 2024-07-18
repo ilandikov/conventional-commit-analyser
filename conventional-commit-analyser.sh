@@ -216,14 +216,19 @@ if [ "$by_option" != "none" ]; then
 fi
 echo "|"
 
-# Print the table separator
-printf "| %-*s | %-*s" "$column_width" "$(printf "%-${column_width}s" | tr ' ' '-')" "$column_width" "$(printf "%-${column_width}s" | tr ' ' '-')"
-if [ "$by_option" != "none" ]; then
-    for period in "${periods_sorted[@]}"; do
-        printf " | %-*s" "$column_width" "$(printf "%-${column_width}s" | tr ' ' '-')"
+print_separator_row() {
+    local column_number=$1
+    local column_width=$2
+    local separator=$(printf "%-${column_width}s" | tr ' ' '-')
+    printf "| %-${column_width}s |" "$separator"
+    for ((i = 1; i < column_number; i++)); do
+        printf " %-${column_width}s |" "$separator"
     done
-fi
-echo " |"
+    printf "\n"
+}
+
+# Print the table separator
+print_separator_row $(( ${#periods_sorted[@]} + 2 )) $column_width
 
 # Create an array to store formatted lines
 formatted_lines=()
