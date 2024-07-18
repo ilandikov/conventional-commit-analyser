@@ -181,6 +181,9 @@ while IFS= read -r commit_info; do
     done
 done <<< "$commit_messages"
 
+# Sort periods in chronological order
+periods_sorted=($(printf "%s\n" "${periods[@]}" | sort))
+
 # Print the total number of commits
 conventional_commit_count=$((author_commit_count - skipped_commit_count))
 if [ -n "$author_name" ]; then
@@ -200,9 +203,6 @@ if $show_skipped_commits; then
 fi
 
 column_width=8
-
-# Sort periods in chronological order
-periods_sorted=($(printf "%s\n" "${periods[@]}" | sort))
 
 print_header_line $column_width $by_option ${periods_sorted[@]}
 
