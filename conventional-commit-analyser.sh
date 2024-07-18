@@ -14,12 +14,12 @@ while [[ "$#" -gt 0 ]]; do
         shift # past value
         ;;
         --author-name)
-        # Join all remaining arguments as the author name
         shift # past argument
-        author_name="$*"
-        # Remove leading and trailing quotes from author_name if present
-        author_name=$(echo "$author_name" | sed -e 's/^"//' -e 's/"$//')
-        break
+        while [[ "$#" -gt 0 && $1 != "--"* ]]; do
+            author_name="$author_name $1"
+            shift
+        done
+        author_name=$(echo "$author_name" | sed -e 's/^ *//' -e 's/ *$//' -e 's/^"//' -e 's/"$//')
         ;;
         --show-skipped-commits)
         show_skipped_commits=true
