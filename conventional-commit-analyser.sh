@@ -126,7 +126,7 @@ while IFS= read -r commit_info; do
 done <<< "$commit_messages"
 
 # Calculate the total number of commits excluding skipped ones
-total_commits_excluding_skipped=$((author_commit_count - skipped_commit_count))
+conventional_commit_count=$((author_commit_count - skipped_commit_count))
 
 # Print the total number of commits
 if [ -n "$author_name" ]; then
@@ -143,11 +143,11 @@ if $show_skipped_commits; then
     done
 fi
 
-echo "Conventional commits: $total_commits_excluding_skipped"
+echo "Conventional commits: $conventional_commit_count"
 
 # Iterate over the prefixes and calculate the percentage of commits
 for i in "${!prefixes[@]}"; do
-    prefix_percentage=$(awk "BEGIN {printf \"%.0f\", (${prefix_counts[$i]} / $total_commits_excluding_skipped) * 100}")
+    prefix_percentage=$(awk "BEGIN {printf \"%.0f\", (${prefix_counts[$i]} / $conventional_commit_count) * 100}")
     if [ "$prefix_percentage" -lt 1 ]; then
         prefix_percentage="<1"
     fi
