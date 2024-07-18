@@ -41,14 +41,8 @@ while [[ "$#" -gt 0 ]]; do
     esac
 done
 
-# Restricting by_option to 'week', 'month', and 'year' for now
-if [ "$by_option" != "none" ] && [ "$by_option" != "week" ] && [ "$by_option" != "month" ] && [ "$by_option" != "year" ]; then
-    echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
-    echo "Usage: $0 --repository <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
-    exit 1
-fi
-
-# Determine period format based on by_option
+# Restrict --by option to 'week', 'month', and 'year' and
+# determine period format based on by_option
 case $by_option in
     year)
     date_format="%Y"
@@ -59,9 +53,13 @@ case $by_option in
     week)
     date_format="%Y-W%U"
     ;;
-    *)
+    none)
     date_format="none"
     ;;
+    *)
+    echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
+    echo "Usage: $0 --repository <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+    exit 1
 esac
 
 # Check if repository is specified
