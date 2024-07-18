@@ -159,12 +159,8 @@ while IFS= read -r commit_info; do
         continue
     fi
 
-    # Extract period based on by_option
-    if [ "$by_option" != "none" ]; then
-        period=$(date -j -f "%Y-%m-%d" "$commit_date" +"$date_format")
-    else
-        period="none"
-    fi
+    # date_format has been set before
+    period=$(date -j -f "%Y-%m-%d" "$commit_date" +"$date_format")
 
     # Increment the count of commits for the period
     ((period_commit_counts["$period"]++))
