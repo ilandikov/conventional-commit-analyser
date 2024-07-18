@@ -247,7 +247,7 @@ for i in "${!prefixes[@]}"; do
 done
 
 # Sort the formatted lines by the percentage field (second column)
-sorted_table_rows=$(printf "%s\n" "${table_rows[@]}" | sort -k4nr -k2)
+sorted_table_rows=$(sort_by_percentages_and_prefixes "${table_rows[@]}")
 
 # Print the sorted lines
 printf "%s\n\n" "$sorted_table_rows"

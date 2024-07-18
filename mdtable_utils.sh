@@ -10,3 +10,11 @@ print_separator_row() {
     done
     printf "\n"
 }
+
+
+sort_by_percentages_and_prefixes() {
+    local rows=("$@")
+    # Sort by percentages in 2nd column first,
+    # Then sort be prefix names
+    printf "%s\n" "${rows[@]}" | sort -k4nr -k2
+}
