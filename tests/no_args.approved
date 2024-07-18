@@ -1,2 +1,2 @@
 Error: Please provide a repository path using --repository.
-Usage: ./conventional-commit-analyser.sh --repository <path> [--author-name <author>]
+Usage: ./conventional-commit-analyser.sh --repository <path> [--author-name <author>] [--show-non-conventional-commits]

@@ -3,6 +3,7 @@
 # Default values
 repository=""
 author_name=""
+show_filtered_commits=false
 
 # Parse command line options
 while [[ "$#" -gt 0 ]]; do
@@ -20,6 +21,10 @@ while [[ "$#" -gt 0 ]]; do
         author_name=$(echo "$author_name" | sed -e 's/^"//' -e 's/"$//')
         break
         ;;
+        --show-non-conventional-commits)
+        show_filtered_commits=true
+        shift # past argument
+        ;;
         *)
         echo "Unknown parameter passed: $1"
         exit 1
@@ -30,7 +35,7 @@ done
 # Check if repository is specified
 if [ -z "$repository" ]; then
     echo "Error: Please provide a repository path using --repository."
-    echo "Usage: $0 --repository <path> [--author-name <author>]"
+    echo "Usage: $0 --repository <path> [--author-name <author>] [--show-non-conventional-commits]"
     exit 1
 fi
 
@@ -45,9 +50,9 @@ cd "$repository" || exit
 
 # Store the output of git log in a variable, filtering by author's name if provided
 if [ -n "$author_name" ]; then
-    commit_messages=$(git log --pretty="%s %an" | grep "$author_name")
+    commit_messages=$(git log --pretty="%s :: %an :: %ad :: %h" --date=short | grep "$author_name")
 else
-    commit_messages=$(git log --pretty="%s %an")
+    commit_messages=$(git log --pretty="%s :: %an :: %ad :: %h" --date=short)
 fi
 
 # Check if commit messages exist
@@ -76,18 +81,29 @@ filtered_commit_count=0
 # Initialize array to store prefix counts
 declare -a prefix_counts
 
+# Initialize array to store filtered commits info
+filtered_commits_info=()
+
 # Iterate over each line in the log output
 while IFS= read -r commit_info; do
-    # Extract commit message and author name
-    commit_message=$(echo "$commit_info" | cut -d " " -f 1)
-    author=$(echo "$commit_info" | cut -d " " -f 2-)
-
+    # Extract commit message, author name, date, and short hash
+    commit_message=$(echo "$commit_info" | awk -F ' :: ' '{print $1}')
+    
+    
+    
     # Increment the total count of commits by the specified author
     ((author_commit_count++))
 
     # Check if the commit message contains a ':'
     if [[ "$commit_message" != *:* ]]; then
         ((filtered_commit_count++))
+        if $show_filtered_commits; then
+            author=$(echo "$commit_info" | awk -F ' :: ' '{print $2}')
+            commit_date=$(echo "$commit_info" | awk -F ' :: ' '{print $3}')
+            commit_hash=$(echo "$commit_info" | awk -F ' :: ' '{print $4}')
+
+            filtered_commits_info+=("$commit_hash on $commit_date by $author '$commit_message'")
+        fi
         continue
     fi
 
@@ -118,7 +134,15 @@ if [ -n "$author_name" ]; then
 else
     echo "Total number of commits in repository '$repository': $author_commit_count"
 fi
+
 echo "Filtered commits: $filtered_commit_count"
+# Print filtered commits info if --show-non-conventional-commits is set
+if $show_filtered_commits; then
+    for commit_info in "${filtered_commits_info[@]}"; do
+        echo "$commit_info"
+    done
+fi
+
 echo "Analyzed commits: $total_commits_excluding_filtered"
 
 # Iterate over the prefixes and calculate the percentage of commits

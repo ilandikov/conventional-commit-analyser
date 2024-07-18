@@ -1,0 +1,1 @@
+--repository ./tests/test_repo --show-non-conventional-commits
