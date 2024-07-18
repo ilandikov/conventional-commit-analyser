@@ -3,7 +3,6 @@
 # Default values
 repository=""
 author_name=""
-words_to_filter=("Merge" "Initial")
 
 # Parse command line options
 while [[ "$#" -gt 0 ]]; do
@@ -86,18 +85,9 @@ while IFS= read -r commit_info; do
     # Increment the total count of commits by the specified author
     ((author_commit_count++))
 
-    # Check if the commit message starts with any word in words_to_filter
-    skip_commit=false
-    for word in "${words_to_filter[@]}"; do
-        if [[ $commit_message == $word* ]]; then
-            ((filtered_commit_count++))
-            skip_commit=true
-            break
-        fi
-    done
-
-    # If commit message starts with a filtered word, skip processing it
-    if $skip_commit; then
+    # Check if the commit message contains a ':'
+    if [[ "$commit_message" != *:* ]]; then
+        ((filtered_commit_count++))
         continue
     fi
 
