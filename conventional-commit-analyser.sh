@@ -220,26 +220,29 @@ printf "\n%s\n" "$header_line"
 # Print the table separator
 print_separator_row $(( ${#periods_sorted[@]} + 2 )) $column_width
 
-# Create an array to store formatted lines
 formatted_lines=()
-
-# Iterate over the prefixes and calculate the percentage of commits
 for i in "${!prefixes[@]}"; do
+
+    # Iterate over the prefixes and calculate the percentage of commits
     prefix_percentage=$(calculate_percentage "${prefix_counts[$i]}" "$conventional_commit_count")
-    # Format each line and store in the array
     line=$(printf "| %-*s | %-*s |" "$column_width" "${prefixes[$i]}" "$column_width" "$prefix_percentage")
+
+    # Add periods if necessary
     if [ "$by_option" != "none" ]; then
         for period in "${periods_sorted[@]}"; do
             index="${prefixes[$i]},${period}"
             period_count=${periodic_prefix_counts["$index"]}
+
             if [ -z "$period_count" ]; then
-                period_count=0
+                line+=$(printf " %-*s |" "$column_width" "0%")
+                continue
             fi
-            period_total_count=${period_commit_counts["$period"]}
-            period_percentage=$(calculate_percentage "$period_count" "$period_total_count")
+
+            period_percentage=$(calculate_percentage "$period_count" "${period_commit_counts["$period"]}")
             line+=$(printf " %-*s |" "$column_width" "$period_percentage")
         done
     fi
+
     formatted_lines+=("$line")
 done
 
