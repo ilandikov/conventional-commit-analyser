@@ -1,6 +1,6 @@
 Total number of commits in repository './tests/test_repo': 8
-Filtered commits: 2
-Analyzed commits: 6
+Skipped non-conventional commits: 2
+Conventional commits: 6
 50%: feat
 17%: refactor
 17%: fix

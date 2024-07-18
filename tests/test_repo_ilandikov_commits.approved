@@ -1,5 +1,5 @@
 Total number of commits by Ilyas Landikov in repository './tests/test_repo': 6
-Filtered commits: 2
-Analyzed commits: 4
+Skipped non-conventional commits: 2
+Conventional commits: 4
 75%: feat
 25%: chore

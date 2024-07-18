@@ -1,8 +1,8 @@
 Total number of commits in repository './tests/test_repo': 8
-Filtered commits: 2
+Skipped non-conventional commits: 2
 ca4ae31 on 2024-07-17 by Ilyas Landikov 'Initial commit'
 ab93474 on 2024-07-17 by Ilyas Landikov 'Merge branch 'refs/heads/master' into my-new-feature'
-Analyzed commits: 6
+Conventional commits: 6
 50%: feat
 17%: refactor
 17%: fix

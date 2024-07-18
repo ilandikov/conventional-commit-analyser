@@ -135,7 +135,7 @@ else
     echo "Total number of commits in repository '$repository': $author_commit_count"
 fi
 
-echo "Filtered commits: $non_conventional_commit_count"
+echo "Skipped non-conventional commits: $non_conventional_commit_count"
 # Print non-conventional commits info if --show-non-conventional-commits is set
 if $show_non_conventional_commits; then
     for commit_info in "${non_conventional_commits_info[@]}"; do
@@ -143,7 +143,7 @@ if $show_non_conventional_commits; then
     done
 fi
 
-echo "Analyzed commits: $total_commits_excluding_non_conventional"
+echo "Conventional commits: $total_commits_excluding_non_conventional"
 
 # Iterate over the prefixes and calculate the percentage of commits
 for i in "${!prefixes[@]}"; do
