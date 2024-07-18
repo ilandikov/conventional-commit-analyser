@@ -1,1 +1,1 @@
---repository ./tests/test_repo --show-non-conventional-commits
+--repository ./tests/test_repo --show-skipped-commits

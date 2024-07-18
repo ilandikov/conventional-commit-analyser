@@ -21,7 +21,7 @@ while [[ "$#" -gt 0 ]]; do
         author_name=$(echo "$author_name" | sed -e 's/^"//' -e 's/"$//')
         break
         ;;
-        --show-non-conventional-commits)
+        --show-skipped-commits)
         show_non_conventional_commits=true
         shift # past argument
         ;;
@@ -35,7 +35,7 @@ done
 # Check if repository is specified
 if [ -z "$repository" ]; then
     echo "Error: Please provide a repository path using --repository."
-    echo "Usage: $0 --repository <path> [--author-name <author>] [--show-non-conventional-commits]"
+    echo "Usage: $0 --repository <path> [--author-name <author>] [--show-skipped-commits]"
     exit 1
 fi
 
@@ -136,7 +136,7 @@ else
 fi
 
 echo "Skipped non-conventional commits: $non_conventional_commit_count"
-# Print non-conventional commits info if --show-non-conventional-commits is set
+# Print non-conventional commits info if --show-skipped-commits is set
 if $show_non_conventional_commits; then
     for commit_info in "${non_conventional_commits_info[@]}"; do
         echo "$commit_info"
