@@ -3,7 +3,7 @@
 # Default values
 repository=""
 author_name=""
-show_filtered_commits=false
+show_non_conventional_commits=false
 
 # Parse command line options
 while [[ "$#" -gt 0 ]]; do
@@ -22,7 +22,7 @@ while [[ "$#" -gt 0 ]]; do
         break
         ;;
         --show-non-conventional-commits)
-        show_filtered_commits=true
+        show_non_conventional_commits=true
         shift # past argument
         ;;
         *)
@@ -75,14 +75,14 @@ author_commit_count=0
 # Initialize total number of commits
 commit_count=0
 
-# Initialize total number of filtered commits
-filtered_commit_count=0
+# Initialize total number of non-conventional commits
+non_conventional_commit_count=0
 
 # Initialize array to store prefix counts
 declare -a prefix_counts
 
-# Initialize array to store filtered commits info
-filtered_commits_info=()
+# Initialize array to store non-conventional commits info
+non_conventional_commits_info=()
 
 # Iterate over each line in the log output
 while IFS= read -r commit_info; do
@@ -96,13 +96,13 @@ while IFS= read -r commit_info; do
 
     # Check if the commit message contains a ':'
     if [[ "$commit_message" != *:* ]]; then
-        ((filtered_commit_count++))
-        if $show_filtered_commits; then
+        ((non_conventional_commit_count++))
+        if $show_non_conventional_commits; then
             author=$(echo "$commit_info" | awk -F ' :: ' '{print $2}')
             commit_date=$(echo "$commit_info" | awk -F ' :: ' '{print $3}')
             commit_hash=$(echo "$commit_info" | awk -F ' :: ' '{print $4}')
 
-            filtered_commits_info+=("$commit_hash on $commit_date by $author '$commit_message'")
+            non_conventional_commits_info+=("$commit_hash on $commit_date by $author '$commit_message'")
         fi
         continue
     fi
@@ -125,8 +125,8 @@ while IFS= read -r commit_info; do
     done
 done <<< "$commit_messages"
 
-# Calculate the total number of commits excluding filtered ones
-total_commits_excluding_filtered=$((author_commit_count - filtered_commit_count))
+# Calculate the total number of commits excluding non-conventional ones
+total_commits_excluding_non_conventional=$((author_commit_count - non_conventional_commit_count))
 
 # Print the total number of commits
 if [ -n "$author_name" ]; then
@@ -135,19 +135,19 @@ else
     echo "Total number of commits in repository '$repository': $author_commit_count"
 fi
 
-echo "Filtered commits: $filtered_commit_count"
-# Print filtered commits info if --show-non-conventional-commits is set
-if $show_filtered_commits; then
-    for commit_info in "${filtered_commits_info[@]}"; do
+echo "Filtered commits: $non_conventional_commit_count"
+# Print non-conventional commits info if --show-non-conventional-commits is set
+if $show_non_conventional_commits; then
+    for commit_info in "${non_conventional_commits_info[@]}"; do
         echo "$commit_info"
     done
 fi
 
-echo "Analyzed commits: $total_commits_excluding_filtered"
+echo "Analyzed commits: $total_commits_excluding_non_conventional"
 
 # Iterate over the prefixes and calculate the percentage of commits
 for i in "${!prefixes[@]}"; do
-    prefix_percentage=$(awk "BEGIN {printf \"%.0f\", (${prefix_counts[$i]} / $total_commits_excluding_filtered) * 100}")
+    prefix_percentage=$(awk "BEGIN {printf \"%.0f\", (${prefix_counts[$i]} / $total_commits_excluding_non_conventional) * 100}")
     if [ "$prefix_percentage" -lt 1 ]; then
         prefix_percentage="<1"
     fi
