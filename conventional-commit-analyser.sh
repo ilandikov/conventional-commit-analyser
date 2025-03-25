@@ -46,9 +46,7 @@ parse_args() {
             shift # past argument
             ;;
             *)
-            echo "Unknown parameter passed: $1"
-            echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
-            exit 1
+            print_error_and_usage_and_abort "Unknown parameter passed: $1"
             ;;
         esac
     done
