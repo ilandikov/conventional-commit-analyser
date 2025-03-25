@@ -1,1 +1,1 @@
---repository ./tests/test_repo --not-an-option-in-the-script
+--path ./tests/test_repo --not-an-option-in-the-script

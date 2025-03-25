@@ -1,1 +1,1 @@
---repository ./tests/test_repo --author-name "Ilyas Landikov" --by not_a_period
+--path ./tests/test_repo --author-name "Ilyas Landikov" --by not_a_period

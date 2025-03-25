@@ -1,1 +1,1 @@
---repository ./does_not_exist --author-name "I never wrote a commit"
+--path ./does_not_exist --author-name "I never wrote a commit"

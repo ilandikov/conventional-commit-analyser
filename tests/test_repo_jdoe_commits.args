@@ -1,1 +1,1 @@
---repository ./tests/test_repo --author-name "John Doe"
+--path ./tests/test_repo --author-name "John Doe"

@@ -1,1 +1,1 @@
---repository ./tests/test_repo --author-name "Ilyas Landikov"
+--path ./tests/test_repo --author-name "Ilyas Landikov"

@@ -11,7 +11,7 @@ This is why this script was created.
 Sample output:
 
 ```terminal
-./conventional-commit-analyser.sh --repository ../obsidian-tasks --author-name "Ilyas Landikov" --by year
+./conventional-commit-analyser.sh --path ../obsidian-tasks --author-name "Ilyas Landikov" --by year
 Total number of commits by Ilyas Landikov in repository '../obsidian-tasks': 1063
 Conventional commits: 1054
 
@@ -42,7 +42,7 @@ Try using this to compare your current self to your previous self. For example, 
 Sample usage:
 
 ```terminal
-./conventional-commit-analyser.sh --repository <path> [--author-name <author>] [--show-skipped-commits]
+./conventional-commit-analyser.sh --path <path> [--author-name <author>] [--show-skipped-commits]
 ```
 
 ### `--by week/month/year`

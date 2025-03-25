@@ -1,1 +1,1 @@
---repository ./tests/test_repo --author-name "Apple Sauce" --show-skipped-commits
+--path ./tests/test_repo --author-name "Apple Sauce" --show-skipped-commits

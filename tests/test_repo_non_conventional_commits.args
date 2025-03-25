@@ -1,1 +1,1 @@
---repository ./tests/test_repo --show-skipped-commits
+--path ./tests/test_repo --show-skipped-commits

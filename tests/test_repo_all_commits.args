@@ -1,1 +1,1 @@
---repository ./tests/test_repo
+--path ./tests/test_repo
