@@ -42,8 +42,12 @@ Try using this to compare your current self to your previous self. For example, 
 Sample usage:
 
 ```terminal
-./conventional-commit-analyser.sh --path <path> [--author-name <author>] [--show-skipped-commits]
+./conventional-commit-analyser.sh --path <path1> [--path <path2>] [--author-name <author>] [--show-skipped-commits]
 ```
+
+### `--path``
+
+There can be any number of --path parameters. The commits will be analysed as if they were in one repository.
 
 ### `--by week/month/year`
 
