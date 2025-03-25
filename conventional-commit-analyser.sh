@@ -4,7 +4,7 @@ source ./calculate_percentage.sh
 source ./mdtable_utils.sh
 
 # Default values
-repository=""
+declare -a repository_paths
 author_name=""
 show_skipped_commits=false
 by_option="none"
@@ -13,7 +13,7 @@ by_option="none"
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --path)
-        repository="$2"
+        repository_paths+=("$2")
         shift # past argument
         shift # past value
         ;;
@@ -36,7 +36,7 @@ while [[ "$#" -gt 0 ]]; do
         ;;
         *)
         echo "Unknown parameter passed: $1"
-        echo "Usage: $0 --path <path1,path2,...> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+        echo "Usage: $0 --path <path1> [--path <path2> ...] [--author-name <author>] [--show-skipped-commits] [--by <period>]"
         exit 1
         ;;
     esac
@@ -59,19 +59,16 @@ case $by_option in
     ;;
     *)
     echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
-    echo "Usage: $0 --path <path1,path2,...> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author-name <author>] [--show-skipped-commits] [--by <period>]"
     exit 1
 esac
 
-# Check if repository is specified
-if [ -z "$repository" ]; then
+# Check if at least one repository path is provided
+if [ ${#repository_paths[@]} -eq 0 ]; then
     echo "Error: Please provide at least one repository path using --path."
-    echo "Usage: $0 --path <path1,path2,...> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author-name <author>] [--show-skipped-commits] [--by <period>]"
     exit 1
 fi
-
-# Split repository paths by comma
-IFS=, read -ra repository_paths <<< "$repository"
 
 # Initialize commit messages storage
 commit_messages=""

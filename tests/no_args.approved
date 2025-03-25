@@ -1,2 +1,2 @@
 Error: Please provide at least one repository path using --path.
-Usage: ./conventional-commit-analyser.sh --path <path1,path2,...> [--author-name <author>] [--show-skipped-commits] [--by <period>]
+Usage: ./conventional-commit-analyser.sh --path <path1> [--path <path2> ...] [--author-name <author>] [--show-skipped-commits] [--by <period>]
