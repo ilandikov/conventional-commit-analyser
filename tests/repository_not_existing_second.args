@@ -1,1 +1,1 @@
---path ./test_repo,./test_repo2
+--path ./test_repo,./not_existing

@@ -1,1 +1,1 @@
-Error: The specified repository './test_repo,./test_repo2' does not exist.
+Error: The specified repository './test_repo,./not_existing' does not exist.
