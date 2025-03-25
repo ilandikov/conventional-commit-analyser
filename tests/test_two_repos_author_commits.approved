@@ -1,1 +1,7 @@
-Error: The specified repository './tests/test_repo,./tests/test_repo2' does not exist.
+Total number of commits by Foo Bar in repositories: 1
+Conventional commits: 1
+
+| Type      | Total     |
+| --------- | --------- |
+| Commits   | 1         |
+| repo2     | 100%      |

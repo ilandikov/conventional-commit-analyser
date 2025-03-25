@@ -36,7 +36,7 @@ while [[ "$#" -gt 0 ]]; do
         ;;
         *)
         echo "Unknown parameter passed: $1"
-        echo "Usage: $0 --path <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+        echo "Usage: $0 --path <path1,path2,...> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
         exit 1
         ;;
     esac
@@ -59,43 +59,53 @@ case $by_option in
     ;;
     *)
     echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
-    echo "Usage: $0 --path <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+    echo "Usage: $0 --path <path1,path2,...> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
     exit 1
 esac
 
 # Check if repository is specified
 if [ -z "$repository" ]; then
-    echo "Error: Please provide a repository path using --path."
-    echo "Usage: $0 --path <path> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+    echo "Error: Please provide at least one repository path using --path."
+    echo "Usage: $0 --path <path1,path2,...> [--author-name <author>] [--show-skipped-commits] [--by <period>]"
     exit 1
 fi
 
-# Check if the specified repository exists
-if [ ! -d "$repository" ]; then
-    echo "Error: The specified repository '$repository' does not exist."
-    exit 1
-fi
+# Split repository paths by comma
+IFS=, read -ra repository_paths <<< "$repository"
 
-# Change to the specified repository
-cd "$repository" || exit
+# Initialize commit messages storage
+commit_messages=""
 
-# Store the output of git log in a variable, filtering by author's name if provided
-if [ -n "$author_name" ]; then
-    commit_messages=$(git log --pretty="%s :: %an :: %ad :: %h" --date=short --author="$author_name")
-else
-    commit_messages=$(git log --pretty="%s :: %an :: %ad :: %h" --date=short)
-fi
+# Fetch commit logs from each repository
+for repo in "${repository_paths[@]}"; do
+    if [ ! -d "$repo" ]; then
+        echo "Error: The specified repository '$repo' does not exist."
+        exit 1
+    fi
+
+    if [ -n "$author_name" ]; then
+        repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short --author="$author_name")
+    else
+        repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short)
+    fi
+
+    if [ -n "$repo_commits" ]; then
+        commit_messages+=$'\n'"$repo_commits"
+    fi
+done
 
 # Check if commit messages exist
 if [ -z "$commit_messages" ]; then
     if [ -n "$author_name" ]; then
-        echo "No commits made by '$author_name' found in repository '$repository'."
+        echo "No commits made by '$author_name' across the provided repositories."
         exit 0
     fi
-
-    echo "No commits found in repository '$repository'."
+    echo "No commits found across the provided repositories."
     exit 0
 fi
+
+# Trim leading newlines
+commit_messages=$(echo "$commit_messages" | sed '/^$/d')
 
 # Create an array to store unique prefixes
 prefixes=()
@@ -187,9 +197,9 @@ periods_sorted=($(printf "%s\n" "${periods[@]}" | sort))
 # Print the total number of commits
 conventional_commit_count=$((author_commit_count - skipped_commit_count))
 if [ -n "$author_name" ]; then
-    echo "Total number of commits by $author_name in repository '$repository': $author_commit_count"
+    echo "Total number of commits by $author_name in repositories: $author_commit_count"
 else
-    echo "Total number of commits in repository '$repository': $author_commit_count"
+    echo "Total number of commits in repositories: $author_commit_count"
 fi
 echo "Conventional commits: $conventional_commit_count"
 

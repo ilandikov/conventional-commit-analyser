@@ -1,1 +1,11 @@
-Error: The specified repository './tests/test_repo,./tests/test_repo2' does not exist.
+Total number of commits in repositories: 19
+Conventional commits: 13
+
+| Type      | Total     |
+| --------- | --------- |
+| Commits   | 13        |
+| feat      | 46%       |
+| chore     | 15%       |
+| fix       | 15%       |
+| refactor  | 15%       |
+| repo2     | 8%        |
