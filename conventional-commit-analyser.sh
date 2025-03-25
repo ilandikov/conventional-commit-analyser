@@ -69,9 +69,7 @@ parse_args() {
         date_format="none"
         ;;
         *)
-        echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
-        echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
-        exit 1
+        print_error_and_usage_and_abort "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
     esac
 
     # Check if at least one repository path is provided
