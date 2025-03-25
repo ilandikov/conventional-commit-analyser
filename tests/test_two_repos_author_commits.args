@@ -1,1 +1,1 @@
---path ./tests/test_repo --path ./tests/test_repo2 --author-name "Foo Bar"
+--path ./tests/test_repo --path ./tests/test_repo2 --author "Foo Bar"

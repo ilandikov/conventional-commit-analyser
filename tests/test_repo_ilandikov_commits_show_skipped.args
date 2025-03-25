@@ -1,1 +1,1 @@
---path ./tests/test_repo --author-name "Ilyas Landikov" --show-skipped-commits
+--path ./tests/test_repo --author "Ilyas Landikov" --show-skipped-commits

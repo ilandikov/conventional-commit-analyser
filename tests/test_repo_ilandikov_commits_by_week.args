@@ -1,1 +1,1 @@
---path ./tests/test_repo --author-name "Ilyas Landikov" --by week
+--path ./tests/test_repo --author "Ilyas Landikov" --by week

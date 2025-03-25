@@ -17,7 +17,7 @@ while [[ "$#" -gt 0 ]]; do
         shift # past argument
         shift # past value
         ;;
-        --author-name)
+        --author)
         shift # past argument
         while [[ "$#" -gt 0 && $1 != "--"* ]]; do
             author_name="$author_name $1"
@@ -36,7 +36,7 @@ while [[ "$#" -gt 0 ]]; do
         ;;
         *)
         echo "Unknown parameter passed: $1"
-        echo "Usage: $0 --path <path1> [--path <path2> ...] [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+        echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>]"
         exit 1
         ;;
     esac
@@ -59,14 +59,14 @@ case $by_option in
     ;;
     *)
     echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
-    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>]"
     exit 1
 esac
 
 # Check if at least one repository path is provided
 if [ ${#repository_paths[@]} -eq 0 ]; then
     echo "Error: Please provide at least one repository path using --path."
-    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author-name <author>] [--show-skipped-commits] [--by <period>]"
+    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>]"
     exit 1
 fi
 
