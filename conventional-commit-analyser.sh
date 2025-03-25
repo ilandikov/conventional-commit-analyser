@@ -8,6 +8,7 @@ declare -a repository_paths
 author_name=""
 show_skipped_commits=false
 by_option="none"
+count_commit_days=false
 
 # Parse command line options
 while [[ "$#" -gt 0 ]]; do
@@ -34,9 +35,13 @@ while [[ "$#" -gt 0 ]]; do
         shift # past argument
         shift # past value
         ;;
+        --commit-days)
+        count_commit_days=true
+        shift # past argument
+        ;;
         *)
         echo "Unknown parameter passed: $1"
-        echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>]"
+        echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
         exit 1
         ;;
     esac
@@ -59,14 +64,14 @@ case $by_option in
     ;;
     *)
     echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
-    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>]"
+    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
     exit 1
 esac
 
 # Check if at least one repository path is provided
 if [ ${#repository_paths[@]} -eq 0 ]; then
     echo "Error: Please provide at least one repository path using --path."
-    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>]"
+    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
     exit 1
 fi
 
@@ -79,17 +84,26 @@ done
 
 # Initialize commit messages storage
 commit_messages=""
+declare -A unique_commit_days
 
 # Fetch commit logs from each repository
 for repo in "${repository_paths[@]}"; do
     if [ -n "$author_name" ]; then
         repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short --author="$author_name")
+        commit_dates=$(git -C "$repo" log --format=%ad --date=short --author="$author_name")
     else
         repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short)
+        commit_dates=$(git -C "$repo" log --format=%ad --date=short)
     fi
 
     if [ -n "$repo_commits" ]; then
         commit_messages+=$'\n'"$repo_commits"
+    fi
+
+    if [ "$count_commit_days" = true ]; then
+        while IFS= read -r date; do
+            unique_commit_days["$date"]=1
+        done <<< "$commit_dates"
     fi
 done
 
@@ -101,6 +115,11 @@ if [ -z "$commit_messages" ]; then
     fi
     echo "No commits found across the provided repositories."
     exit 0
+fi
+
+if [ "$count_commit_days" = true ]; then
+    echo "Days with commits: ${#unique_commit_days[@]}."
+    echo
 fi
 
 # Trim leading newlines
