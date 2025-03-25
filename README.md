@@ -12,25 +12,26 @@ Sample output:
 
 ```terminal
 ./conventional-commit-analyser.sh --path ../obsidian-tasks --author "Ilyas Landikov" --by year
-Total number of commits by Ilyas Landikov in repository '../obsidian-tasks': 1063
-Conventional commits: 1054
+Total number of commits by Ilyas Landikov in repositories: 1426
+Conventional commits: 1417
 
-| Type     | Total    | 2022     | 2023     | 2024     |
-| -------- | -------- | -------- | -------- | -------- |
-| refactor | 61%      | 0%       | 58%      | 65%      |
-| test     | 24%      | 0%       | 25%      | 23%      |
-| feat     | 5%       | 100%     | 6%       | 4%       |
-| jsdoc    | 3%       | 0%       | 3%       | 2%       |
-| fix      | 2%       | 0%       | 3%       | 2%       |
-| chore    | 1%       | 0%       | <1%      | 2%       |
-| docs     | 1%       | 0%       | 3%       | 0%       |
-| style    | 1%       | 0%       | 2%       | 0%       |
-| vault    | 1%       | 0%       | <1%      | 1%       |
-| comment  | <1%      | 0%       | <1%      | 1%       |
-| doc      | <1%      | 0%       | 1%       | 0%       |
-| fix!!    | <1%      | 0%       | <1%      | 0%       |
-| tests    | <1%      | 0%       | <1%      | 0%       |
-
+| Type      | Total     | 2022      | 2023      | 2024      |
+| --------- | --------- | --------- | --------- | --------- |
+| Commits   | 1417      | 1         | 577       | 839       |
+| refactor  | 63%       | 0%        | 58%       | 67%       |
+| test      | 23%       | 0%        | 25%       | 22%       |
+| feat      | 4%        | 100%      | 6%        | 4%        |
+| fix       | 3%        | 0%        | 3%        | 3%        |
+| jsdoc     | 2%        | 0%        | 3%        | 2%        |
+| chore     | 1%        | 0%        | <1%       | 1%        |
+| docs      | 1%        | 0%        | 3%        | 0%        |
+| style     | 1%        | 0%        | 2%        | 0%        |
+| comment   | <1%       | 0%        | <1%       | 1%        |
+| contrib   | <1%       | 0%        | 0%        | <1%       |
+| doc       | <1%       | 0%        | 1%        | 0%        |
+| fix!!     | <1%       | 0%        | <1%       | 0%        |
+| tests     | <1%       | 0%        | <1%       | 0%        |
+| vault     | <1%       | 0%        | <1%       | 1%        |
 ```
 
 Here we can guess that I'm working a lot of refactorings and rather avoid documentation =)
