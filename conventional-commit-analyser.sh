@@ -70,16 +70,18 @@ if [ ${#repository_paths[@]} -eq 0 ]; then
     exit 1
 fi
 
-# Initialize commit messages storage
-commit_messages=""
-
-# Fetch commit logs from each repository
 for repo in "${repository_paths[@]}"; do
     if [ ! -d "$repo" ]; then
         echo "Error: The specified repository '$repo' does not exist."
         exit 1
     fi
+done
 
+# Initialize commit messages storage
+commit_messages=""
+
+# Fetch commit logs from each repository
+for repo in "${repository_paths[@]}"; do
     if [ -n "$author_name" ]; then
         repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short --author="$author_name")
     else
