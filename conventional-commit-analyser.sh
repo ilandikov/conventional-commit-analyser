@@ -10,77 +10,80 @@ show_skipped_commits=false
 by_option="none"
 count_commit_days=false
 
-# Parse command line options
-while [[ "$#" -gt 0 ]]; do
-    case $1 in
-        --path)
-        repository_paths+=("$2")
-        shift # past argument
-        shift # past value
+parse_args() {
+    while [[ "$#" -gt 0 ]]; do
+        case $1 in
+            --path)
+            repository_paths+=("$2")
+            shift # past argument
+            shift # past value
+            ;;
+            --author)
+            shift # past argument
+            while [[ "$#" -gt 0 && $1 != "--"* ]]; do
+                author_name="$author_name $1"
+                shift
+            done
+            author_name=$(echo "$author_name" | sed -e 's/^ *//' -e 's/ *$//' -e 's/^"//' -e 's/"$//')
+            ;;
+            --show-skipped-commits)
+            show_skipped_commits=true
+            shift # past argument
+            ;;
+            --by)
+            by_option="$2"
+            shift # past argument
+            shift # past value
+            ;;
+            --commit-days)
+            count_commit_days=true
+            shift # past argument
+            ;;
+            *)
+            echo "Unknown parameter passed: $1"
+            echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
+            exit 1
+            ;;
+        esac
+    done
+
+    # Restrict --by option to 'week', 'month', and 'year' and
+    # determine period format based on by_option
+    case $by_option in
+        year)
+        date_format="%Y"
         ;;
-        --author)
-        shift # past argument
-        while [[ "$#" -gt 0 && $1 != "--"* ]]; do
-            author_name="$author_name $1"
-            shift
-        done
-        author_name=$(echo "$author_name" | sed -e 's/^ *//' -e 's/ *$//' -e 's/^"//' -e 's/"$//')
+        month)
+        date_format="%Y-%m"
         ;;
-        --show-skipped-commits)
-        show_skipped_commits=true
-        shift # past argument
+        week)
+        date_format="%Y-W%U"
         ;;
-        --by)
-        by_option="$2"
-        shift # past argument
-        shift # past value
-        ;;
-        --commit-days)
-        count_commit_days=true
-        shift # past argument
+        none)
+        date_format="none"
         ;;
         *)
-        echo "Unknown parameter passed: $1"
+        echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
         echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
         exit 1
-        ;;
     esac
-done
 
-# Restrict --by option to 'week', 'month', and 'year' and
-# determine period format based on by_option
-case $by_option in
-    year)
-    date_format="%Y"
-    ;;
-    month)
-    date_format="%Y-%m"
-    ;;
-    week)
-    date_format="%Y-W%U"
-    ;;
-    none)
-    date_format="none"
-    ;;
-    *)
-    echo "Error: Unsupported value for --by. Only 'year', 'month' and 'week' are supported."
-    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
-    exit 1
-esac
-
-# Check if at least one repository path is provided
-if [ ${#repository_paths[@]} -eq 0 ]; then
-    echo "Error: Please provide at least one repository path using --path."
-    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
-    exit 1
-fi
-
-for repo in "${repository_paths[@]}"; do
-    if [ ! -d "$repo" ]; then
-        echo "Error: The specified repository '$repo' does not exist."
+    # Check if at least one repository path is provided
+    if [ ${#repository_paths[@]} -eq 0 ]; then
+        echo "Error: Please provide at least one repository path using --path."
+        echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
         exit 1
     fi
-done
+
+    for repo in "${repository_paths[@]}"; do
+        if [ ! -d "$repo" ]; then
+            echo "Error: The specified repository '$repo' does not exist."
+            exit 1
+        fi
+    done
+}
+
+parse_args "$@"
 
 # Initialize commit messages storage
 commit_messages=""
