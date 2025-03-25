@@ -208,6 +208,21 @@ print_header_line $column_width $by_option ${periods_sorted[@]}
 
 print_separator_row $(( ${#periods_sorted[@]} + 2 )) $column_width
 
+commits_row=$(printf "| %-*s | %-*s |" "$column_width" "Commits" "$column_width" "$conventional_commit_count")
+if [ "$by_option" != "none" ]; then
+    for period in "${periods_sorted[@]}"; do
+        period_count=${period_commit_counts["$period"]}
+
+        # If no commits for the period, print "0"
+        if [ -z "$period_count" ]; then
+            period_count=0
+        fi
+
+        commits_row+=$(printf " %-*s |" "$column_width" "$period_count")
+    done
+fi
+echo "$commits_row"
+
 table_rows=()
 for i in "${!prefixes[@]}"; do
 
