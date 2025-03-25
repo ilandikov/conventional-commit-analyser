@@ -11,7 +11,7 @@ This is why this script was created.
 Sample output:
 
 ```terminal
-./conventional-commit-analyser.sh --path ../obsidian-tasks --author "Ilyas Landikov" --by year
+./conventional-commit-analyser.sh --path ../obsidian-tasks --author "Ilyas Landikov" --by year --commit-days
 Days with commits: 154.
 
 Total number of commits by Ilyas Landikov in repositories: 1426
