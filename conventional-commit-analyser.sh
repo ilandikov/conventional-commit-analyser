@@ -10,6 +10,12 @@ show_skipped_commits=false
 by_option="none"
 count_commit_days=false
 
+print_error_and_usage_and_abort() {
+    echo "Error: Please provide at least one repository path using --path."
+    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
+    exit 1
+}
+
 parse_args() {
     while [[ "$#" -gt 0 ]]; do
         case $1 in
@@ -70,9 +76,7 @@ parse_args() {
 
     # Check if at least one repository path is provided
     if [ ${#repository_paths[@]} -eq 0 ]; then
-        echo "Error: Please provide at least one repository path using --path."
-        echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
-        exit 1
+        print_error_and_usage_and_abort
     fi
 
     for repo in "${repository_paths[@]}"; do
