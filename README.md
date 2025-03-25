@@ -12,6 +12,8 @@ Sample output:
 
 ```terminal
 ./conventional-commit-analyser.sh --path ../obsidian-tasks --author "Ilyas Landikov" --by year
+Days with commits: 154.
+
 Total number of commits by Ilyas Landikov in repositories: 1426
 Conventional commits: 1417
 
@@ -65,6 +67,10 @@ Add this if you wish to filter commits by author's name. For example `--author "
 ### `--show-skipped-commits`
 
 The script will analyse only conventional commits - commits with message starting with several non-space characters and a column. If you see lots of skipped commits, add this option to see what has been skipped.
+
+### `--commit-days`
+
+Show the total number of unique days when a commit happened. When analysing two repositories, if commits happeneds on the same day, it will be counted as 1 commit day.
 
 ## Important limitations
 
