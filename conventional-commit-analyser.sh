@@ -89,8 +89,8 @@ parse_args "$@"
 commit_messages=""
 declare -A unique_commit_days
 
-# Fetch commit logs from each repository
-for repo in "${repository_paths[@]}"; do
+read_repo_data() {
+    for repo in "${repository_paths[@]}"; do
     if [ -n "$author_name" ]; then
         repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short --author="$author_name")
         commit_dates=$(git -C "$repo" log --format=%ad --date=short --author="$author_name")
@@ -108,7 +108,10 @@ for repo in "${repository_paths[@]}"; do
             unique_commit_days["$date"]=1
         done <<< "$commit_dates"
     fi
-done
+    done
+}
+
+read_repo_data
 
 # Check if commit messages exist
 if [ -z "$commit_messages" ]; then
