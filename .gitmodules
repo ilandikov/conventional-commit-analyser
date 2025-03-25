@@ -1,3 +1,7 @@
 [submodule "test_repo"]
 	path = tests/test_repo
 	url = ./test_repo
+
+[submodule "test_repo2"]
+	path = tests/test_repo2
+	url = ./test_repo2
