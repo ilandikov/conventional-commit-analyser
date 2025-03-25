@@ -1,8 +1,8 @@
 Total number of commits by Apple Sauce in repository './tests/test_repo': 2
 Conventional commits: 2
 
-| Type     | Total    |
-| -------- | -------- |
-| Commits  | 2        |
-| fix      | 50%      |
-| refactor | 50%      |
+| Type      | Total     |
+| --------- | --------- |
+| Commits   | 2         |
+| fix       | 50%       |
+| refactor  | 50%       |

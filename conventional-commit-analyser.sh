@@ -202,7 +202,7 @@ if $show_skipped_commits; then
     done
 fi
 
-column_width=8
+column_width=9
 
 print_header_line $column_width $by_option ${periods_sorted[@]}
 

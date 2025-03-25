@@ -3,8 +3,8 @@ Conventional commits: 2
 
 Skipped non-conventional commits: 0
 
-| Type     | Total    |
-| -------- | -------- |
-| Commits  | 2        |
-| fix      | 50%      |
-| refactor | 50%      |
+| Type      | Total     |
+| --------- | --------- |
+| Commits   | 2         |
+| fix       | 50%       |
+| refactor  | 50%       |

@@ -1,10 +1,10 @@
 Total number of commits in repository './tests/test_repo': 9
 Conventional commits: 6
 
-| Type     | Total    |
-| -------- | -------- |
-| Commits  | 6        |
-| feat     | 50%      |
-| chore    | 17%      |
-| fix      | 17%      |
-| refactor | 17%      |
+| Type      | Total     |
+| --------- | --------- |
+| Commits   | 6         |
+| feat      | 50%       |
+| chore     | 17%       |
+| fix       | 17%       |
+| refactor  | 17%       |
