@@ -9,9 +9,8 @@ ab93474 on 2024-07-17 by Ilyas Landikov 'Merge branch 'refs/heads/master' into m
 | Type      | Total     |
 | --------- | --------- |
 | Commits   | 15        |
-| feat      | 33%       |
+| feat      | 40%       |
 | test      | 27%       |
 | refactor  | 20%       |
 | chore     | 7%        |
-| feat!     | 7%        |
 | fix       | 7%        |

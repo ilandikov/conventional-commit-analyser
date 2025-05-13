@@ -172,8 +172,8 @@ while IFS= read -r commit_info; do
     commit_hash=$(echo "$commit_info" | awk -F ' :: ' '{print $4}')
 
     # Check if the commit message contains the commit type, optional scope in parentheses and
-    # an optional exclamation marks (any number) followed by a colon
-    if ! [[ "$commit_message" =~ ^[^[:space:]]+(\(.*\))?[!+]?: ]]; then
+    # optional exclamation marks (any number) before the colon
+    if ! [[ "$commit_message" =~ ^[0-9A-Za-z]+((\(.*\))?(!+)?)?: ]]; then
         ((skipped_commit_count++))
         if $show_skipped_commits; then
             author=$(echo "$commit_info" | awk -F ' :: ' '{print $2}')
@@ -185,7 +185,7 @@ while IFS= read -r commit_info; do
     fi
 
     # Extract the commit type from the commit message
-    commit_message_prefix=$(echo "$commit_message" | sed -E 's/^([^[:space:]]+)(\(.*\))?(!+)?:.*/\1/')
+    commit_message_prefix=$(echo "$commit_message" | sed -E 's/^([0-9A-Za-z]+)(\([^)]*\))?(!+)?:.*/\1/')
 
     # If the prefix is not already in the prefixes array, add it
     if ! [[ " ${prefixes[@]} " =~ " ${commit_message_prefix} " ]]; then

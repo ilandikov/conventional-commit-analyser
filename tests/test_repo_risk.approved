@@ -4,12 +4,11 @@ Conventional commits: 17
 | Type      | Total     |
 | --------- | --------- |
 | Commits   | 17        |
-| feat      | 29%       |
+| feat      | 35%       |
 | refactor  | 24%       |
 | test      | 24%       |
 | fix       | 12%       |
 | chore     | 6%        |
-| feat!     | 6%        |
 
 Risk analysis:
 Conventional commits with risk notation: 7

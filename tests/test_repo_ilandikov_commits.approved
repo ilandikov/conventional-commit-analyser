@@ -4,9 +4,8 @@ Conventional commits: 15
 | Type      | Total     |
 | --------- | --------- |
 | Commits   | 15        |
-| feat      | 33%       |
+| feat      | 40%       |
 | test      | 27%       |
 | refactor  | 20%       |
 | chore     | 7%        |
-| feat!     | 7%        |
 | fix       | 7%        |
