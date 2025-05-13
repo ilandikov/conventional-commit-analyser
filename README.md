@@ -2,6 +2,8 @@
 
 A bash script for simple analysis of [Conventional Commits](https://www.conventionalcommits.org/).
 
+The script ignores the *scope* part (the text in parentheses) in conventional commit messages. For example, both `test(ui): ...` and `test(api): ...` will be counted as `test`.
+
 ## The purpose
 
 [Conventional Commits](https://www.conventionalcommits.org/) is a powerful tool to control commits' contents. Once that is under control it could be a good idea to analyse what one was/is actually working on.
