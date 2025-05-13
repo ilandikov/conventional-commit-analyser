@@ -1,5 +1,5 @@
-Total number of commits by Ilyas Landikov in repositories: 13
-Conventional commits: 10
+Total number of commits by Ilyas Landikov in repositories: 14
+Conventional commits: 11
 
 Skipped non-conventional commits: 3
 4912740 on 2024-07-18 by Ilyas Landikov 'Revert "feat: change2"'
@@ -8,9 +8,9 @@ ab93474 on 2024-07-17 by Ilyas Landikov 'Merge branch 'refs/heads/master' into m
 
 | Type      | Total     |
 | --------- | --------- |
-| Commits   | 10        |
-| feat      | 30%       |
-| refactor  | 30%       |
-| test      | 20%       |
-| chore     | 10%       |
-| fix       | 10%       |
+| Commits   | 11        |
+| feat      | 36%       |
+| refactor  | 27%       |
+| test      | 18%       |
+| chore     | 9%        |
+| fix       | 9%        |
