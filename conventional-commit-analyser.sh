@@ -159,6 +159,7 @@ periods=()
 # Initialize array to store risk
 declare -A risk_counts
 total_risk_commits=0
+commits_without_risk=0
 
 # Iterate over each line in the log output
 while IFS= read -r commit_info; do
@@ -204,12 +205,12 @@ while IFS= read -r commit_info; do
         rest=$(echo "$commit_message" | cut -d ":" -f2- | sed 's/^ *//')
         risk_char=$(echo "$rest" | cut -c1)
         if [[ "$risk_char" =~ [[:alnum:]] ]]; then
-            risk="none"
+            ((commits_without_risk++))
         else
             risk="$risk_char"
+            ((risk_counts["$risk"]++))
+            ((total_risk_commits++))
         fi
-        ((risk_counts["$risk"]++))
-        ((total_risk_commits++))
     fi
 
     # Increment the periodic count for the prefix
@@ -314,8 +315,7 @@ printf "%s\n\n" "$sorted_table_rows"
 
 if $enable_risk_analysis; then
     echo "Risk analysis:"
-    echo "Total conventional commits: $conventional_commit_count"
-    echo "Total with risk info: $total_risk_commits"
+    echo "Conventional commits with risk notation: $total_risk_commits"
     echo
     printf "| %-*s | %-*s |\n" "$column_width" "Risk" "$column_width" "%"
     print_separator_row 2 $column_width

@@ -10,13 +10,11 @@ Conventional commits: 10
 | chore     | 10%       |
 
 Risk analysis:
-Total conventional commits: 10
-Total with risk info: 10
+Conventional commits with risk notation: 4
 
 | Risk      | %         |
 | --------- | --------- |
-| .         | 10%       |
-| -         | 10%       |
-| !         | 10%       |
-| @         | 10%       |
-| none      | 60%       |
+| .         | 25%       |
+| -         | 25%       |
+| !         | 25%       |
+| @         | 25%       |
