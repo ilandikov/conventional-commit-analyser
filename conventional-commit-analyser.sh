@@ -173,7 +173,7 @@ while IFS= read -r commit_info; do
 
     # Check if the commit message contains the commit type, optional scope in parentheses and
     # optional exclamation marks (any number) before the colon
-    if ! [[ "$commit_message" =~ ^[0-9A-Za-z]+((\(.*\))?(!+)?)?: ]]; then
+    if ! [[ "$commit_message" =~ ^[0-9A-Za-z]+(\([^\)]*\))?(!+)?: ]]; then
         ((skipped_commit_count++))
         if $show_skipped_commits; then
             author=$(echo "$commit_info" | awk -F ' :: ' '{print $2}')
