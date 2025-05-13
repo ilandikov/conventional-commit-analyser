@@ -185,7 +185,7 @@ while IFS= read -r commit_info; do
     fi
 
     # Extract the commit type from the commit message
-    commit_message_prefix=$(echo "$commit_message" | sed -E 's/^([0-9A-Za-z]+)(\([^)]*\))?(!+)?:.*/\1/')
+    commit_message_prefix=$(echo "$commit_message" | grep -oE '^[0-9A-Za-z]+')
 
     # If the prefix is not already in the prefixes array, add it
     if ! [[ " ${prefixes[@]} " =~ " ${commit_message_prefix} " ]]; then
