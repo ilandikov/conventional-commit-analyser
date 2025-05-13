@@ -1,14 +1,14 @@
 Days with commits: 4.
 
 Total number of commits in repositories: 20
-Conventional commits: 16
+Conventional commits: 17
 
 | Type      | Total     |
 | --------- | --------- |
-| Commits   | 16        |
-| feat      | 25%       |
-| refactor  | 25%       |
-| test      | 25%       |
+| Commits   | 17        |
+| feat      | 29%       |
+| refactor  | 24%       |
+| test      | 24%       |
 | fix       | 12%       |
 | chore     | 6%        |
 | feat!     | 6%        |
