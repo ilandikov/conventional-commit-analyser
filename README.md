@@ -42,10 +42,10 @@ Here we can guess that I'm working a lot of refactorings and rather avoid docume
 
 Try using this to compare your current self to your previous self. For example, save the analysis results today and see the difference in a month or two. What has changed? Are going more towards "test" or "feat"?
 
-Sample usage:
+Usage:
 
 ```terminal
-./conventional-commit-analyser.sh --path <path1> [--path <path2>] [--author <author>] [--show-skipped-commits]
+./conventional-commit-analyser.sh --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]
 ```
 
 ### `--path`
