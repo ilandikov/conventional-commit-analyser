@@ -48,7 +48,7 @@ Sample usage:
 ./conventional-commit-analyser.sh --path <path1> [--path <path2>] [--author <author>] [--show-skipped-commits]
 ```
 
-### `--path``
+### `--path`
 
 There can be any number of --path parameters. The commits will be analysed as if they were in one repository.
 
