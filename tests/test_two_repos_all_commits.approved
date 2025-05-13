@@ -1,11 +1,12 @@
-Total number of commits in repositories: 23
-Conventional commits: 17
+Total number of commits in repositories: 25
+Conventional commits: 19
 
 | Type      | Total     |
 | --------- | --------- |
-| Commits   | 17        |
-| feat      | 35%       |
-| refactor  | 29%       |
-| fix       | 18%       |
-| chore     | 12%       |
-| repo2     | 6%        |
+| Commits   | 19        |
+| feat      | 32%       |
+| refactor  | 26%       |
+| fix       | 16%       |
+| chore     | 11%       |
+| test      | 11%       |
+| repo2     | 5%        |

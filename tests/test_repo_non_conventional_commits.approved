@@ -1,5 +1,5 @@
-Total number of commits in repositories: 13
-Conventional commits: 10
+Total number of commits in repositories: 15
+Conventional commits: 12
 
 Skipped non-conventional commits: 3
 4912740 on 2024-07-18 by Ilyas Landikov 'Revert "feat: change2"'
@@ -8,8 +8,9 @@ ab93474 on 2024-07-17 by Ilyas Landikov 'Merge branch 'refs/heads/master' into m
 
 | Type      | Total     |
 | --------- | --------- |
-| Commits   | 10        |
-| refactor  | 40%       |
-| feat      | 30%       |
-| fix       | 20%       |
-| chore     | 10%       |
+| Commits   | 12        |
+| refactor  | 33%       |
+| feat      | 25%       |
+| fix       | 17%       |
+| test      | 17%       |
+| chore     | 8%        |
