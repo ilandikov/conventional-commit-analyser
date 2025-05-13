@@ -1,8 +1,10 @@
-Total number of commits by Ilyas Landikov in repositories: 7
-Conventional commits: 4
+Total number of commits by Ilyas Landikov in repositories: 11
+Conventional commits: 8
 
 | Type      | Total     |
 | --------- | --------- |
-| Commits   | 4         |
-| feat      | 75%       |
-| chore     | 25%       |
+| Commits   | 8         |
+| feat      | 38%       |
+| refactor  | 38%       |
+| chore     | 12%       |
+| fix       | 12%       |
