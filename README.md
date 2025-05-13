@@ -20,30 +20,39 @@ This is why this script was created.
 
 Sample output:
 
-```terminal
-./conventional-commit-analyser.sh --path ../obsidian-tasks --author "Ilyas Landikov" --by year --commit-days
-Days with commits: 154.
+```terminal./conventional-commit-analyser.sh --path ../obsidian-tasks --author "Ilyas Landikov" --by year --commit-days --risk
+Days with commits: 166.
 
-Total number of commits by Ilyas Landikov in repositories: 1426
-Conventional commits: 1417
+Total number of commits by Ilyas Landikov in repositories: 1539
+Conventional commits: 1530
 
-| Type      | Total     | 2022      | 2023      | 2024      |
-| --------- | --------- | --------- | --------- | --------- |
-| Commits   | 1417      | 1         | 577       | 839       |
-| refactor  | 63%       | 0%        | 58%       | 67%       |
-| test      | 23%       | 0%        | 25%       | 22%       |
-| feat      | 4%        | 100%      | 6%        | 4%        |
-| fix       | 3%        | 0%        | 3%        | 3%        |
-| jsdoc     | 2%        | 0%        | 3%        | 2%        |
-| chore     | 1%        | 0%        | <1%       | 1%        |
-| docs      | 1%        | 0%        | 3%        | 0%        |
-| style     | 1%        | 0%        | 2%        | 0%        |
-| comment   | <1%       | 0%        | <1%       | 1%        |
-| contrib   | <1%       | 0%        | 0%        | <1%       |
-| doc       | <1%       | 0%        | 1%        | 0%        |
-| fix!!     | <1%       | 0%        | <1%       | 0%        |
-| tests     | <1%       | 0%        | <1%       | 0%        |
-| vault     | <1%       | 0%        | <1%       | 1%        |
+| Type      | Total     | 2022      | 2023      | 2024      | 2025      |
+| --------- | --------- | --------- | --------- | --------- | --------- |
+| Commits   | 1530      | 1         | 577       | 837       | 115       |
+| refactor  | 62%       | 0%        | 58%       | 67%       | 51%       |
+| test      | 24%       | 0%        | 25%       | 22%       | 33%       |
+| feat      | 4%        | 100%      | 6%        | 3%        | 5%        |
+| fix       | 3%        | 0%        | 3%        | 3%        | 5%        |
+| jsdoc     | 2%        | 0%        | 3%        | 2%        | 1%        |
+| chore     | 1%        | 0%        | <1%       | 1%        | 0%        |
+| docs      | 1%        | 0%        | 3%        | 0%        | 3%        |
+| style     | 1%        | 0%        | 2%        | 0%        | 0%        |
+| vault     | 1%        | 0%        | <1%       | 1%        | 1%        |
+| comment   | <1%       | 0%        | <1%       | 1%        | 1%        |
+| contrib   | <1%       | 0%        | 0%        | <1%       | 0%        |
+| doc       | <1%       | 0%        | 1%        | 0%        | 0%        |
+| tests     | <1%       | 0%        | <1%       | 0%        | 0%        |
+
+Risk analysis:
+Conventional commits with risk notation: 1295
+
+| Risk      | %         |
+| --------- | --------- |
+| -         | 44%       |
+| .         | 42%       |
+| !         | 14%       |
+| @         | <1%       |
+| **        | <1%       |
 ```
 
 Here we can guess that I'm working a lot of refactorings and rather avoid documentation =)
