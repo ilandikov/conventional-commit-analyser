@@ -316,9 +316,18 @@ if $enable_risk_analysis; then
     printf "| %-*s | %-*s |\n" "$column_width" "Risk" "$column_width" "%"
     print_separator_row 2 $column_width
 
+    risk_lines=()
     for risk in "${!risk_counts[@]}"; do
         percentage=$(calculate_percentage "${risk_counts[$risk]}" "$total_risk_commits")
-        printf "| %-*s | %-*s |\n" "$column_width" "$risk" "$column_width" "$percentage"
+        line=$(printf "| %-*s | %-*s |" "$column_width" "$risk" "$column_width" "$percentage")
+        # Save percentage as a sortable number and the full line
+        numeric_value=$(echo "$percentage" | tr -d '%')
+        risk_lines+=("$numeric_value::$line")
     done
+
+    # Sort by numeric value descending and print
+    sorted_risk_lines=$(printf "%s\n" "${risk_lines[@]}" | sort -t ':' -k1,1nr | cut -d ':' -f3-)
+
+    printf "%s\n" "$sorted_risk_lines"
     echo
 fi
