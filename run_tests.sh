@@ -57,12 +57,18 @@ for args_file in $args_files; do
     if diff_output=$($diff_cmd -u "$approved_output_file" "$received_output_file"); then
         echo_pass "Test '$test_name' passed."
         passed_tests+=("$test_name")
+
+        # Delete the .received file if test passed
+        rm -f "$received_output_file"
     else
         if [ "$approve" = true ]; then
             rm "$approved_output_file"
             cp "$received_output_file" "$approved_output_file"
             echo_warning "Test '$test_name' approved."
             approved_tests+=("$test_name")
+
+            # Delete the .received file if test passed
+            rm -f "$received_output_file"
         else
             echo_error "Test '$test_name' failed:"
             failed_tests+=("$test_name")
