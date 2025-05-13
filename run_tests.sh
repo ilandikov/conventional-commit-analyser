@@ -27,8 +27,10 @@ args_files=$(find tests -type f -name "*.args")
 
 # Loop over each found arguments file
 for args_file in $args_files; do
-    # Extract the test name from the args file name
-    test_name=$(basename "$args_file" .args)
+    # Strip the leading "tests/" and ".args" to get a relative path for output files
+    relative_path=${args_file#tests/}
+    test_name=${relative_path%.args}
+
 
     # Define the received output file and approved output file based on the test name
     received_output_file="tests/${test_name}.received"
