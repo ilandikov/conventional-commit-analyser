@@ -1,16 +1,18 @@
-Total number of commits in repositories: 18
-Conventional commits: 15
+Total number of commits in repositories: 20
+Conventional commits: 16
 
-Skipped non-conventional commits: 3
+Skipped non-conventional commits: 4
+d0affa5 on 2025-05-13 by Ilyas Landikov 'feat(new scope)!: commit with breaking change and scope'
 4912740 on 2024-07-18 by Ilyas Landikov 'Revert "feat: change2"'
 ca4ae31 on 2024-07-17 by Ilyas Landikov 'Initial commit'
 ab93474 on 2024-07-17 by Ilyas Landikov 'Merge branch 'refs/heads/master' into my-new-feature'
 
 | Type      | Total     |
 | --------- | --------- |
-| Commits   | 15        |
-| feat      | 27%       |
-| refactor  | 27%       |
-| test      | 27%       |
-| fix       | 13%       |
-| chore     | 7%        |
+| Commits   | 16        |
+| feat      | 25%       |
+| refactor  | 25%       |
+| test      | 25%       |
+| fix       | 12%       |
+| chore     | 6%        |
+| feat!     | 6%        |
