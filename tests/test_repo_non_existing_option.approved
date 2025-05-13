@@ -1,2 +1,2 @@
 Unknown parameter passed: --not-an-option-in-the-script
-Usage: ./conventional-commit-analyser.sh --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]
+Usage: ./conventional-commit-analyser.sh --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days] [--risk]

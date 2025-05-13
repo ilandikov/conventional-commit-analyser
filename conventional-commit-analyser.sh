@@ -9,10 +9,11 @@ author_name=""
 show_skipped_commits=false
 by_option="none"
 count_commit_days=false
+enable_risk_analysis=false
 
 print_error_and_usage_and_abort() {
     echo "$1" 
-    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]"
+    echo "Usage: $0 --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days] [--risk]"
     exit 1
 }
 
@@ -44,6 +45,10 @@ parse_args() {
             --commit-days)
             count_commit_days=true
             shift # past argument
+            ;;
+            --risk)
+            enable_risk_analysis=true
+            shift
             ;;
             *)
             print_error_and_usage_and_abort "Unknown parameter passed: $1"

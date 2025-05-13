@@ -45,7 +45,7 @@ Try using this to compare your current self to your previous self. For example, 
 Usage:
 
 ```terminal
-./conventional-commit-analyser.sh --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days]
+./conventional-commit-analyser.sh --path <path1> [--path <path2> ...] [--author <author>] [--show-skipped-commits] [--by <period>] [--commit-days] [--risk]
 ```
 
 ### `--path`
@@ -71,6 +71,10 @@ The script will analyse only conventional commits - commits with message startin
 ### `--commit-days`
 
 Show the total number of unique days when a commit happened. When analysing two repositories, if commits happeneds on the same day, it will be counted as 1 commit day.
+
+### `--risk`
+
+Analyse the risk of the commits.
 
 ## Important limitations
 
