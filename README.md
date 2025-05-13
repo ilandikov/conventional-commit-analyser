@@ -74,7 +74,22 @@ Show the total number of unique days when a commit happened. When analysing two 
 
 ### `--risk`
 
-Analyse the risk of the commits.
+This option analyzes the risks associated with commits if they were notated in the commit messages as `<type>: <risk> <description>`, where `<rish>` is 1 or 2 non-alphanumeric characters: `.`, `-`, `**`, etc.
+
+When this option is enabled, there will be an additional output like this:
+
+```terminal
+Risk analysis:
+Conventional commits with risk notation: 6
+
+| Risk      | %         |
+| --------- | --------- |
+| **        | 33%       |
+| -         | 17%       |
+| !         | 17%       |
+| .         | 17%       |
+| @         | 17%       |
+```
 
 ## Important limitations
 
