@@ -156,6 +156,10 @@ declare -A periodic_prefix_counts
 declare -A period_commit_counts
 periods=()
 
+# Initialize array to store risk
+declare -A risk_counts
+total_risk_commits=0
+
 # Iterate over each line in the log output
 while IFS= read -r commit_info; do
     # Increment the total count of commits by the specified author
@@ -164,6 +168,8 @@ while IFS= read -r commit_info; do
     # Extract commit message, author name, date, and short hash
     commit_message=$(echo "$commit_info" | awk -F ' :: ' '{print $1}')
     commit_date=$(echo "$commit_info" | awk -F ' :: ' '{print $3}')
+    author=$(echo "$commit_info" | awk -F ' :: ' '{print $2}')
+    commit_hash=$(echo "$commit_info" | awk -F ' :: ' '{print $4}')
 
     # Check if the commit message contains a word followed by a ':'
     if ! [[ "$commit_message" =~ ^[^[:space:]]+: ]]; then
@@ -193,6 +199,18 @@ while IFS= read -r commit_info; do
             break
         fi
     done
+
+    if $enable_risk_analysis; then
+        rest=$(echo "$commit_message" | cut -d ":" -f2- | sed 's/^ *//')
+        risk_char=$(echo "$rest" | cut -c1)
+        if [[ "$risk_char" =~ [[:alnum:]] ]]; then
+            risk="none"
+        else
+            risk="$risk_char"
+        fi
+        ((risk_counts["$risk"]++))
+        ((total_risk_commits++))
+    fi
 
     # Increment the periodic count for the prefix
     if [ "$by_option" == "none" ]; then
@@ -293,3 +311,18 @@ sorted_table_rows=$(sort_by_percentages_and_prefixes "${table_rows[@]}")
 
 # Print the sorted lines
 printf "%s\n\n" "$sorted_table_rows"
+
+if $enable_risk_analysis; then
+    echo "Risk analysis:"
+    echo "Total conventional commits: $conventional_commit_count"
+    echo "Total with risk info: $total_risk_commits"
+    echo
+    printf "| %-*s | %-*s |\n" "$column_width" "Risk" "$column_width" "%"
+    print_separator_row 2 $column_width
+
+    for risk in "${!risk_counts[@]}"; do
+        percentage=$(calculate_percentage "${risk_counts[$risk]}" "$total_risk_commits")
+        printf "| %-*s | %-*s |\n" "$column_width" "$risk" "$column_width" "$percentage"
+    done
+    echo
+fi
