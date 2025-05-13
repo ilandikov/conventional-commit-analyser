@@ -159,7 +159,6 @@ periods=()
 # Initialize array to store risk
 declare -A risk_counts
 total_risk_commits=0
-commits_without_risk=0
 
 # Iterate over each line in the log output
 while IFS= read -r commit_info; do
@@ -204,9 +203,7 @@ while IFS= read -r commit_info; do
     if $enable_risk_analysis; then
         rest=$(echo "$commit_message" | cut -d ":" -f2- | sed 's/^ *//')
         risk_char=$(echo "$rest" | cut -c1)
-        if [[ "$risk_char" =~ [[:alnum:]] ]]; then
-            ((commits_without_risk++))
-        else
+        if [[ ! "$risk_char" =~ [[:alnum:]] ]]; then
             risk="$risk_char"
             ((risk_counts["$risk"]++))
             ((total_risk_commits++))
