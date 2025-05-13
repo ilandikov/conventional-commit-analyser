@@ -2,7 +2,15 @@
 
 A bash script for simple analysis of [Conventional Commits](https://www.conventionalcommits.org/).
 
-The script ignores the *scope* part (the text in parentheses) in conventional commit messages. For example, both `test(ui): ...` and `test(api): ...` will be counted as `test`.
+The script ignores the *scope* part (the text in parentheses) and the *breaking change* marker (`!`) in conventional commit messages. For example, all of the following will be counted as `test`:
+
+- `test: ...`
+- `test(ui): ...`
+- `test(api)!: ...`
+- `test!: ...`
+- `test(ui)!!: ...`
+
+Note: Conventional Commits talks about only one `!` character, but this script accepts any number of those.
 
 ## The purpose
 
