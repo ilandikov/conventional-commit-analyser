@@ -96,23 +96,23 @@ declare -A unique_commit_days
 
 read_repo_data() {
     for repo in "${repository_paths[@]}"; do
-    if [ -n "$author_name" ]; then
-        repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short --author="$author_name")
-        commit_dates=$(git -C "$repo" log --format=%ad --date=short --author="$author_name")
-    else
-        repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short)
-        commit_dates=$(git -C "$repo" log --format=%ad --date=short)
-    fi
+        if [ -n "$author_name" ]; then
+            repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short --author="$author_name")
+            commit_dates=$(git -C "$repo" log --format=%ad --date=short --author="$author_name")
+        else
+            repo_commits=$(git -C "$repo" log --pretty="%s :: %an :: %ad :: %h" --date=short)
+            commit_dates=$(git -C "$repo" log --format=%ad --date=short)
+        fi
 
-    if [ -n "$repo_commits" ]; then
-        commit_messages+=$'\n'"$repo_commits"
-    fi
+        if [ -n "$repo_commits" ]; then
+            commit_messages+=$'\n'"$repo_commits"
+        fi
 
-    if [ "$count_commit_days" = true ]; then
-        while IFS= read -r date; do
-            unique_commit_days["$date"]=1
-        done <<< "$commit_dates"
-    fi
+        if [ "$count_commit_days" = true ]; then
+            while IFS= read -r date; do
+                unique_commit_days["$date"]=1
+            done <<< "$commit_dates"
+        fi
     done
 }
 
