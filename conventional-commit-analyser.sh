@@ -202,9 +202,8 @@ while IFS= read -r commit_info; do
 
     if $enable_risk_analysis; then
         rest=$(echo "$commit_message" | cut -d ":" -f2- | sed 's/^ *//')
-        risk_char=$(echo "$rest" | cut -c1)
-        if [[ ! "$risk_char" =~ [[:alnum:]] ]]; then
-            risk="$risk_char"
+        risk=$(echo "$rest" | grep -o '^[^[:alnum:][:space:]]\{1,2\}')
+        if [ -n "$risk" ]; then
             ((risk_counts["$risk"]++))
             ((total_risk_commits++))
         fi
