@@ -1,22 +1,22 @@
 Total number of commits in repositories: 18
-Conventional commits: 13
+Conventional commits: 15
 
 | Type      | Total     |
 | --------- | --------- |
-| Commits   | 13        |
-| feat      | 31%       |
-| refactor  | 31%       |
-| fix       | 15%       |
-| test      | 15%       |
-| chore     | 8%        |
+| Commits   | 15        |
+| feat      | 27%       |
+| refactor  | 27%       |
+| test      | 27%       |
+| fix       | 13%       |
+| chore     | 7%        |
 
 Risk analysis:
-Conventional commits with risk notation: 6
+Conventional commits with risk notation: 7
 
 | Risk      | %         |
 | --------- | --------- |
-| **        | 33%       |
-| -         | 17%       |
-| !         | 17%       |
-| .         | 17%       |
-| @         | 17%       |
+| -         | 29%       |
+| **        | 29%       |
+| !         | 14%       |
+| .         | 14%       |
+| @         | 14%       |
